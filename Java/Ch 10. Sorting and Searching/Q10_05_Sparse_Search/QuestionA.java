@@ -46,8 +46,8 @@ public class QuestionA {
 	}
 	
 	public static void main(String[] args) {
-        String[] stringList = {"apple", "", "", "banana", "", "", "", "carrot", "duck", "", "", "eel", "", "flower"};
-        System.out.println(search(stringList, "ac"));
+        String[] stringList = {"apple", "", "", "banana", "", "", "", "carrot", "duck", "", "", "eel", "", "flower", ""};
+        System.out.println(search(stringList, "banana"));
         
 		//for (String s : stringList) {
 		//	String cloned = new String(s);

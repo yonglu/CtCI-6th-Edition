@@ -24,9 +24,11 @@ public class QuestionB {
 	}
 	
 	public static void main(String[] args) {
-		int n = 50;
+		long before = System.currentTimeMillis();
+		int n = 35;
 		int ways = countWays(n);
 		System.out.println(ways);
+		System.out.println("Took: " + (System.currentTimeMillis() - before) + " milliseconds." );
 	}
 
 }
