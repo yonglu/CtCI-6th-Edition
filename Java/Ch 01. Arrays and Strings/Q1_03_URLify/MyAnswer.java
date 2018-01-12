@@ -2,26 +2,24 @@ package Q1_03_URLify;
 
 import CtCILibrary.AssortedMethods;
 
-public class Question {
+public class MyAnswer {
 	// Assume string has sufficient free space at the end
 	public static void replaceSpaces(char[] str, int trueLength) {
-		int spaceCount = 0, index, i = 0;
-		for (i = 0; i < trueLength; i++) {
+		int spaceCount = 0;
+		for (int i = 0; i < trueLength; i++) {
 			if (str[i] == ' ') {
 				spaceCount++;
 			}
 		}
-		index = trueLength + spaceCount * 2;
-		if (trueLength < str.length) str[trueLength] = '\0';
-		for (i = trueLength - 1; i >= 0; i--) {
+		int newLength = trueLength + 2 * spaceCount;
+		int newIndex = newLength - 1;
+		for (int i = trueLength - 1; i >= 0; i--) {
 			if (str[i] == ' ') {
-				str[index - 1] = '0';
-				str[index - 2] = '2';
-				str[index - 3] = '%';
-				index = index - 3;
+				str[newIndex--] = '0';
+				str[newIndex--] = '2';
+				str[newIndex--] = '%';
 			} else {
-				str[index - 1] = str[i];
-				index--;
+				str[newIndex--] = str[i];
 			}
 		}
 	}
@@ -36,7 +34,7 @@ public class Question {
 	}
 	
 	public static void main(String[] args) {
-		String str = "  Mr John Smith    ";
+		String str = "  Mr John Smith         ";
 		char[] arr = str.toCharArray();
 		int trueLength = findLastCharacter(arr) + 1;
 		replaceSpaces(arr, trueLength);	
