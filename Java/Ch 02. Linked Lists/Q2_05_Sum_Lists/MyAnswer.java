@@ -74,24 +74,32 @@ public class MyAnswer {
 		return value;
 	}	
 	
-	public static LinkedListNode invertLinkedlist(LinkedListNode node) {
-		if (node == null) {
-			return null;
-		}
-		
-		LinkedListNode end = node;
-		while (end.next != null) {
-			end = end.next;
-		}
-		LinkedListNode endRunner = end;
-		while (endRunner != null) {
-			LinkedListNode temp = endRunner.next;
-			endRunner.next = endRunner.prev;
-			endRunner.prev = temp; 
-			endRunner = endRunner.next;
-		}
-		return end;
-	}		
+   public static LinkedListNode reverseLinkedlistReturnNew(LinkedListNode node) {
+      if (node == null || node.next == null) {
+         return node;
+      }
+
+      LinkedListNode reverse = null;
+      
+      LinkedListNode current = node;
+      
+      while (current != null) {
+         LinkedListNode temp = new LinkedListNode();
+         temp.data = current.data;
+         if (reverse == null) {
+            reverse = temp;
+         } else {
+            temp.next = reverse;
+            reverse.prev = temp;    // if it is double linked list
+         }
+         
+         reverse = temp;
+         current = current.next;
+      }
+      
+      node = reverse;
+      return node;
+   }     
 	
 	public static void main(String[] args) {
 		LinkedListNode lA1 = new LinkedListNode(9, null, null);
@@ -128,12 +136,14 @@ public class MyAnswer {
 		System.out.println("  " + lA1.printForward());		
 		System.out.println("+ " + lB1.printForward());		
 		
-		list3 = addLists(invertLinkedlist(lA1), invertLinkedlist(lB1));
+		LinkedListNode lA1Reverse = reverseLinkedlistReturnNew(lA1);
+      LinkedListNode lB1Reverse = reverseLinkedlistReturnNew(lB1);
+		list3 = addLists(lA1Reverse, lB1Reverse);
 		
-		System.out.println("= " + list3.printForward());	
+		System.out.println("= " + reverseLinkedlistReturnNew(list3).printForward());	
 		
-		l1 = linkedListToInt(lA1);
-		l2 = linkedListToInt(lB1);
+		l1 = linkedListToInt(lA1Reverse);
+		l2 = linkedListToInt(lB1Reverse);
 		l3 = linkedListToInt(list3);
 		
 		System.out.print(l1 + " + " + l2 + " = " + l3 + "\n");

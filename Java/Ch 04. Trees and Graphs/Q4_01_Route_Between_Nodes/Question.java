@@ -1,6 +1,7 @@
 package Q4_01_Route_Between_Nodes;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class Question {
 	public enum State {
@@ -13,7 +14,12 @@ public class Question {
 		Node[] n = g.getNodes();
 		Node start = n[3];
 		Node end = n[5];
+      for (Node u : g.getNodes()) {
+         u.state = State.Unvisited;
+      }
 		System.out.println(search(g, start, end));
+      System.out.println(mysearchBFS(g, start, end));
+      System.out.println(mysearchDFS(g, start, end));
 	}
 	
 	public static Graph createNewGraph()
@@ -39,6 +45,56 @@ public class Question {
 		return g;
 	}
 
+   public static boolean mysearchBFS(Graph g,Node start,Node end) {  
+      if (start == null || end == null) {
+         return false;
+      }
+      Queue<Node> queue = new LinkedList<Node>();
+      start.state = Question.State.Visited;
+      queue.add(start);
+      while (!queue.isEmpty()) {
+         Node temp = queue.poll();
+         if (temp.getVertex().equals(end.getVertex())) {
+            return true;
+         }            
+         for (Node n : temp.getAdjacent()) {
+            if (n.state != State.Visited) {
+               queue.add(n);
+            }
+         }
+      }
+      
+      return false;
+   }
+   
+   public static boolean mysearchDFS(Graph g,Node start,Node end) {  
+      if (start == null || end == null) {
+         return false;
+      }      
+      return mysearchDFS(start, end.getVertex());
+   }
+   
+   public static boolean mysearchDFS(Node current, final String matchName) {  
+      boolean isMatch = false;
+      if (current == null) {
+         return false;
+      }
+      current.state = State.Visited;
+      if (current.getVertex().equals(matchName)) {
+         return true;
+      }  
+      for (Node n : current.getAdjacent()) {
+         if (n.state != State.Visited) {
+            isMatch = mysearchDFS(n, matchName);
+            if (isMatch == true) {
+               return true;
+            }
+         }
+      }
+      
+      return isMatch;
+   }
+	
     public static boolean search(Graph g,Node start,Node end) {  
         LinkedList<Node> q = new LinkedList<Node>();
         for (Node u : g.getNodes()) {

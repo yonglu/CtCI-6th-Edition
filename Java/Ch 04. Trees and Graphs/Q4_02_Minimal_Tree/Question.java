@@ -11,6 +11,7 @@ public class Question {
 		System.out.println("Root? " + root.data);
 		System.out.println("Created BST? " + root.isBST());
 		System.out.println("Height: " + root.height());
+      root.print();
 	}
 
 }
