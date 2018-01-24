@@ -35,7 +35,7 @@ public class QuestionA {
 	
 	public static void main(String[] args) {
 		int size = 5;
-		boolean[][] maze = AssortedMethods.randomBooleanMatrix(size, size, 70);
+		boolean[][] maze = AssortedMethods.randomBooleanMatrix(size, size, 20);
 		
 		AssortedMethods.printMatrix(maze);
 		

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MyAnswer {
-	
 	public static int countWays(int n) {
 	   if (n < 0) {
 	      return 0;
@@ -18,8 +17,10 @@ public class MyAnswer {
 	}
 	
    public static int countWaysWithCache(int n) {
+// Good trick to just allocate n+1 size of cache array so no need to adjust the index
       int[] cache = new int[n+1];
       Arrays.fill(cache, -1);
+// Remember this block.      
       return countWaysWithCache(n, cache);
    }
 
