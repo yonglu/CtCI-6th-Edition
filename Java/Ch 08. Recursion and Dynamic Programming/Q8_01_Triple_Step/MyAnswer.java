@@ -33,11 +33,11 @@ public class MyAnswer {
       } 
       
       if (cache[n] == -1) {
-         cache[n] = countWays(n-1) + countWays(n-2) + countWays(n-3);
+         cache[n] = countWaysWithCache(n-1, cache) + countWaysWithCache(n-2, cache) + countWaysWithCache(n-3, cache);
       }
       return cache[n];
    }
-   
+      
 	public static void main(String[] args) {
 		long before = System.currentTimeMillis();
 		int n = 35;
