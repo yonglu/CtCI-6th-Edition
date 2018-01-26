@@ -19,7 +19,13 @@ For example, given words = ["oath","pea","eat","rain"] and board =
 Return ["eat","oath"].
 */
 
-public class MyAnswer {	
+/*
+ *   Solution with DFS and Trie.  https://www.programcreek.com/2014/06/leetcode-word-search-ii-java/
+ *   If find a predetermined word, Trie doesn't have advantage, but if need to find all possible word on board, 
+ *   then Trie is more efficient because if can check prefix and backtrack earlier.
+ */
+
+public class MyAnswerDFS {	
 	
 	private static int[][] deltas = {
 			{-1, -1}, {-1,0}, {-1, 1}, {0,-1},{0,1}, {1, -1}, {1,0}, {1, 1}
