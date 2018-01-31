@@ -6,7 +6,34 @@ public class MyAnswer {
 			
    public static LinkedListNode insertNode(LinkedListNode head, int value) {
       if (head == null) {
-         return head;
+    	  LinkedListNode temp = new LinkedListNode(value);
+    	  return temp;
+      }
+      
+      LinkedListNode runner = head;
+      
+      // insert first
+      if (runner.data > value) {
+    	  LinkedListNode temp = new LinkedListNode(value);
+    	  temp.next = runner;
+    	  return temp;    	  
+      }     
+      
+      // insert middle
+      while (runner.next != null) {
+    	  if (runner.next.data > value) {
+        	  LinkedListNode temp = new LinkedListNode(value);
+    		  temp.next = runner.next;
+    		  runner.next = temp;
+    		  break;
+    	  }
+    	  runner = runner.next;
+      }
+      
+      // insert to the last one
+      if(runner.next == null) {
+       	  LinkedListNode temp = new LinkedListNode(value);
+       	  runner.next = temp;
       }
       
       return head;

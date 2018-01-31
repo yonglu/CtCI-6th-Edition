@@ -85,16 +85,37 @@ public class MyAnswer {
    {
        StringBuilder sb = new StringBuilder();
        
-       if (matrix.length == 0 || matrix[0].length == 0) return null; // Not a matrix
-
-       /* M and N are already swapped */
-       int m = matrix.length;
-       int n = matrix[0].length;   
-       int[][] ret = new int[n][m];
-       for (int i = 0; i < m; ++i) {
-           for (int j = 0; j < n; ++j) {
-               ret[m - i - 1][n - j - 1] = matrix[i][j]; 
+       if (matrix.length == 0 || matrix[0].length == 0) {
+    	   return sb.toString(); // Not a matrix
+       }
+       
+       int r1 = 0, r2 = matrix.length - 1;
+       int c1 = 0, c2 = matrix[0].length - 1;
+       while (r1 <= r2 && c1 <= c2) {
+    	   // first row
+           for (int c = c1; c <= c2; c++) {
+        	   sb.append(matrix[r1][c]);
            }
+           // last column
+           for (int r = r1 + 1; r <= r2; r++) {
+        	   sb.append(matrix[r][c2]);
+           }
+           // last row
+           if (r1 < r2) {
+               for (int c = c2 - 1; c > c1; c--) {
+            	   sb.append(matrix[r2][c]);
+               }
+           }
+           // first column
+           if (c1 < c2) {
+               for (int r = r2; r > r1; r--) {
+            	   sb.append(matrix[r][c1]);
+               }
+           }
+           r1++;
+           r2--;
+           c1++;
+           c2--;
        }
        return sb.toString();
    }  
@@ -117,11 +138,11 @@ public class MyAnswer {
       AssortedMethods.printMatrix(rotateMatrix180(matrix));
             
       System.out.println("New 5x5 matrix");
-      int[][] matrix2 = AssortedMethods.randomMatrix(5, 5, 0, 9);
+      int[][] matrix2 = AssortedMethods.randomMatrix(4, 7, 0, 9);
       AssortedMethods.printMatrix(matrix2);
       
       System.out.println("Traverse Clockwise");
-      System.out.println(traverseClockwise(matrix));
+      System.out.println(traverseClockwise(matrix2));
 	}
 
 }
