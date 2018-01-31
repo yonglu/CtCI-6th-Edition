@@ -79,7 +79,27 @@ public class MyAnswer {
        }
        return ret;
    }  
-	
+   
+   // Traverse a 2d array clockwise until you get to the center. Print out each element you visit
+   public static String traverseClockwise(int[][] matrix)
+   {
+       StringBuilder sb = new StringBuilder();
+       
+       if (matrix.length == 0 || matrix[0].length == 0) return null; // Not a matrix
+
+       /* M and N are already swapped */
+       int m = matrix.length;
+       int n = matrix[0].length;   
+       int[][] ret = new int[n][m];
+       for (int i = 0; i < m; ++i) {
+           for (int j = 0; j < n; ++j) {
+               ret[m - i - 1][n - j - 1] = matrix[i][j]; 
+           }
+       }
+       return sb.toString();
+   }  
+   
+   
 	public static void main(String[] args) {
 		int[][] matrix = AssortedMethods.randomMatrix(3, 3, 0, 9);
 		AssortedMethods.printMatrix(matrix);
@@ -95,6 +115,13 @@ public class MyAnswer {
       
       System.out.println("Rotatae 180");
       AssortedMethods.printMatrix(rotateMatrix180(matrix));
+            
+      System.out.println("New 5x5 matrix");
+      int[][] matrix2 = AssortedMethods.randomMatrix(5, 5, 0, 9);
+      AssortedMethods.printMatrix(matrix2);
+      
+      System.out.println("Traverse Clockwise");
+      System.out.println(traverseClockwise(matrix));
 	}
 
 }
