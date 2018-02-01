@@ -47,6 +47,9 @@ public class ItoAAtoI {
 		return b.toString();
 	}
 	
+	// 732 % 10 -> 2
+	// 73 % 10 -> 3
+	// 7 % 10 -> 7
 	public static int reverseInt(int x) {
 	    int rev = 0;
 	    while(x != 0){
