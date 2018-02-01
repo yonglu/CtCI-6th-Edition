@@ -29,7 +29,7 @@ public class MyQueue<T> {
 	public T remove() {
 		if (first == null) throw new NoSuchElementException();
 		T data = first.data;
-		first = first.next;
+		first = first.next; 
 		if (first == null) {
 			last = null;
 		}

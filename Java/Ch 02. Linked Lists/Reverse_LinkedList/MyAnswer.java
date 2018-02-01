@@ -25,6 +25,7 @@ public class MyAnswer {
       node = prev;
       return node;
    }     
+
    
    public static LinkedListNode reverseAndClone(LinkedListNode node) {
       if (node == null || node.next == null) {
