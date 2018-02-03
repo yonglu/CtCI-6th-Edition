@@ -4,6 +4,7 @@ import java.util.*;
 
 public class LongestPalindrome {
 
+   // Not efficient O(2^N).  Can be done with matrix like Subset Sum
    public static String longestPalindrome(String word) {
 
       int len = word.length();
