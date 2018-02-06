@@ -97,8 +97,14 @@ public class MyAnswerDFS {
        {
            for( int j = 1; j <= len; j++ )
            {
+               // Just carry the previous row, if we have the sum equals to target already in previous row,
+               // then it should be true.
                table[i][j] = table[i][j-1]; 
                
+               // If no previous sum equals to target, then we check if i >= array[j-1]; 
+               // we check to see if matrix[i - array[j-1]][j-1] is true. This means 
+               // check if there is any subset of array[0..j-2] with sum i-array[j-1].
+               // If there is, then we assign true to this entry.
                if( !table[i][j] && i >= array[j-1] )
                    table[i][j] = table[i-array[j-1]][j-1];
            }
