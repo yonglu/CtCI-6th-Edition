@@ -31,63 +31,6 @@ public class MyAnswerDFS {
 			{-1, -1}, {-1,0}, {-1, 1}, {0,-1},{0,1}, {1, -1}, {1,0}, {1, 1}
 	};
 	
-	public static List<String> findWords2(char[][] board, String[] words) {
-		ArrayList<String> result = new ArrayList<String>();
-	 
-		int m = board.length;
-		int n = board[0].length;
-	 
-		for (String word : words) {
-			boolean flag = false;
-			for (int i = 0; i < m; i++) {
-				for (int j = 0; j < n; j++) {
-					char[][] newBoard = new char[m][n];
-					for (int x = 0; x < m; x++)
-						for (int y = 0; y < n; y++)
-							newBoard[x][y] = board[x][y];
-	 
-					if (dfs(newBoard, word, i, j, 0)) {
-						flag = true;
-					}
-				}
-			}
-			if (flag) {
-				result.add(word);
-			}
-		}
-	 
-		return result;
-	}
-	 
-	public static boolean dfs(char[][] board, String word, int i, int j, int k) {
-		int m = board.length;
-		int n = board[0].length;
-	 
-		if (i < 0 || j < 0 || i >= m || j >= n || k > word.length() - 1) {
-			return false;
-		}
-	 
-		if (board[i][j] == word.charAt(k)) {
-			char temp = board[i][j];
-			board[i][j] = '#';
-	 
-			if (k == word.length() - 1) {
-				return true;
-			} else if (dfs(board, word, i - 1, j, k + 1)
-					|| dfs(board, word, i + 1, j, k + 1)
-					|| dfs(board, word, i, j - 1, k + 1)
-					|| dfs(board, word, i, j + 1, k + 1)) {
-				board[i][j] = temp;
-				return true;
-			}
-	 
-		} else {
-			return false;
-		}
-	 
-		return false;
-	}	
-	
 	public static class Point {
 		public int row;
 		public int col;
@@ -105,34 +48,6 @@ public class MyAnswerDFS {
 		}
 		char c = word.charAt(index);
 		
-/*		
- * 	See the improve block below		
- * 
- * 		// if it is last character, that's the end case
-		if (index == word.length() - 1) {
-			if (c == board[row][col]) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			visited.add(new Point(row, col));
-			if (c == board[row][col]) {
-				for (int[] delta : deltas) {
-					int newRow = row + delta[0];
-					int newCol = col + delta[1];
-					if (!visited.contains(new Point(newRow, newCol))) {
-						// if find our word, no need to search other paths
-						if (findWords(board, word, newRow, newCol, index+1, visited)) {
-							return true;
-						}
-					}
-				}
-			} else {
-				return false;
-			}			
-		} 
-*/		
 		visited.add(new Point(row, col));
 		if (c == board[row][col]) {
 			if (index == word.length() - 1) {
@@ -205,6 +120,64 @@ public class MyAnswerDFS {
 		
 		return wordsFound;
 	}	
+	
+   public static List<String> findWords2(char[][] board, String[] words) {
+      ArrayList<String> result = new ArrayList<String>();
+    
+      int m = board.length;
+      int n = board[0].length;
+    
+      for (String word : words) {
+         boolean flag = false;
+         for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+               char[][] newBoard = new char[m][n];
+               for (int x = 0; x < m; x++)
+                  for (int y = 0; y < n; y++)
+                     newBoard[x][y] = board[x][y];
+    
+               if (dfs(newBoard, word, i, j, 0)) {
+                  flag = true;
+               }
+            }
+         }
+         if (flag) {
+            result.add(word);
+         }
+      }
+    
+      return result;
+   }
+    
+   public static boolean dfs(char[][] board, String word, int i, int j, int k) {
+      int m = board.length;
+      int n = board[0].length;
+    
+      if (i < 0 || j < 0 || i >= m || j >= n || k > word.length() - 1) {
+         return false;
+      }
+    
+      if (board[i][j] == word.charAt(k)) {
+         char temp = board[i][j];
+         board[i][j] = '#';
+    
+         if (k == word.length() - 1) {
+            return true;
+         } else if (dfs(board, word, i - 1, j, k + 1)
+               || dfs(board, word, i + 1, j, k + 1)
+               || dfs(board, word, i, j - 1, k + 1)
+               || dfs(board, word, i, j + 1, k + 1)) {
+            board[i][j] = temp;
+            return true;
+         }
+    
+      } else {
+         return false;
+      }
+    
+      return false;
+   }  
+   	
 	
 	public static void main(String[] args) {
       char board[][] = new char[][] {  
