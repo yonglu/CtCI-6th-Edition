@@ -138,16 +138,20 @@ public class MyAnswerDFS {
 			if (index == word.length() - 1) {
 				return true;
 			} else {
-				if (findWords(board, word, row-1, col-1, index+1, visited) ||
-						findWords(board, word, row-1, col, index+1, visited) ||
-						findWords(board, word, row-1, col+1, index+1, visited) ||
-						findWords(board, word, row, col-1, index+1, visited) ||
-						findWords(board, word, row, col+1, index+1, visited) ||
-						findWords(board, word, row+1, col-1, index+1, visited) ||
-						findWords(board, word, row+1, col, index+1, visited) ||
-						findWords(board, word, row+1, col+1, index+1, visited)) {
-					return true;
-				}
+			   for (int i = -1; i <= 1; i++) {
+			      for (int j= -1; j<=1; j++) {
+			         if (i==0 && j==0) continue;
+	               int newRow = row + i;
+	               int newCol = col + j;
+	               if (!visited.contains(new Point(newRow, newCol))) {
+	                  // if find our word, no need to search other paths
+	                  if (findWords(board, word, newRow, newCol, index+1, visited)) {
+	                     return true;
+	                  }
+	               }
+			         
+			      }
+			   }
 /*				for (int[] delta : deltas) {
 					int newRow = row + delta[0];
 					int newCol = col + delta[1];
@@ -157,8 +161,20 @@ public class MyAnswerDFS {
 							return true;
 						}
 					}
-				}				
-*/			}
+				}	
+*/			
+/*          if (findWords(board, word, row-1, col-1, index+1, visited) ||
+            findWords(board, word, row-1, col, index+1, visited) ||
+            findWords(board, word, row-1, col+1, index+1, visited) ||
+            findWords(board, word, row, col-1, index+1, visited) ||
+            findWords(board, word, row, col+1, index+1, visited) ||
+            findWords(board, word, row+1, col-1, index+1, visited) ||
+            findWords(board, word, row+1, col, index+1, visited) ||
+            findWords(board, word, row+1, col+1, index+1, visited)) {
+         return true;
+      } 
+*/			   
+			}
 		} else {
 			return false;
 		}
