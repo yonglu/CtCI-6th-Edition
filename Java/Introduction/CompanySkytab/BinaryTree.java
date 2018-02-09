@@ -39,6 +39,10 @@ public class BinaryTree {
 //	`n7.count_descendants()` should return 0.
 
 	public static int count_descendants(TreeNode node) {
+	     if (node == null) {
+	         return 0;
+	      }
+
 		return count_nodes(node) - 1;
 	}
 
@@ -64,7 +68,9 @@ public class BinaryTree {
 		System.out.println(count_descendants(root.left ));
 		System.out.println(count_descendants(root.right));
 		System.out.println(count_descendants(root.left.left));
+      System.out.println(count_descendants(root.left.right));
 		System.out.println(count_descendants(root.left.left.left));
+      System.out.println(count_descendants(null));
 
 	}
 	public static void printResult(ArrayList<LinkedList<TreeNode>> result){

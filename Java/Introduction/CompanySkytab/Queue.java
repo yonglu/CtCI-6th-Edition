@@ -50,6 +50,11 @@ public class Queue {
 //
 //	1. `grumbo` establishes a many-to-many relationship between `dinglebop` and `fleeb`. 
 //	What needs to happen to ensure that  `dinglebop` can be associated to same `fleeb` only once?
+   
+//   'grumbo' table's primary key is a composite of both 'dinglebop' table's primary key 'dinglebop_id' 
+//   and 'fleeb' table's primary key 'fleeb_id'.  'grumbo' table will have 'dinglebop_id' and 'fleeb_id' 
+//   as foreign key column. 
+   
 //
 //
 //	2. Write an SQL query displaying counts of each `fleeb` grouped by the
