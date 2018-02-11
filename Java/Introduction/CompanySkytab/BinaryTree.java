@@ -39,10 +39,6 @@ public class BinaryTree {
 //	`n7.count_descendants()` should return 0.
 
 	public static int count_descendants(TreeNode node) {
-	     if (node == null) {
-	         return 0;
-	      }
-
 		return count_nodes(node) - 1;
 	}
 
@@ -64,15 +60,15 @@ public class BinaryTree {
 		TreeNode root = AssortedMethods.createTreeFromArray(nodes_flattened);
 		root.print();
 		
-		System.out.println(count_descendants(root));
-		System.out.println(count_descendants(root.left ));
-		System.out.println(count_descendants(root.right));
-		System.out.println(count_descendants(root.left.left));
-      System.out.println(count_descendants(root.left.right));
-		System.out.println(count_descendants(root.left.left.left));
-      System.out.println(count_descendants(null));
+		System.out.println(root.count_descendants());
+		System.out.println(root.left.count_descendants());
+		System.out.println(root.right.count_descendants());
+		System.out.println(root.left.left.count_descendants());
+		System.out.println(root.left.right.count_descendants());
+		System.out.println(root.left.left.left.count_descendants());
 
 	}
+	
 	public static void printResult(ArrayList<LinkedList<TreeNode>> result){
 		int depth = 0;
 		for(LinkedList<TreeNode> entry : result) {

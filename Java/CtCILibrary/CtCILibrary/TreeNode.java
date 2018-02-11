@@ -101,4 +101,24 @@ public class TreeNode {
 	public void print() {
 		BTreePrinter.printNode(this);
 	}
+	
+	public int count_descendants() {
+		  return count_nodes() - 1;
+		}
+
+	public int count_nodes() {
+		int numNodes = 1;
+		if ((left == null) && (right == null)) {
+			return numNodes;
+		}
+		if (left != null) {
+			numNodes += left.count_nodes();
+		}
+		if (right != null) {
+			numNodes += right.count_nodes();
+		}
+		return numNodes;
+
+	}
+
 } 
