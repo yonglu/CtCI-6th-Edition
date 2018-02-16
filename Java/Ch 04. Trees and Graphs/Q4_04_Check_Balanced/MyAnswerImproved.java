@@ -3,6 +3,10 @@ import CtCILibrary.TreeNode;
 
 public class MyAnswerImproved {
 		
+//	Check Balanced: Implement a function to check if a binary tree is balanced. For the purposes of
+//	this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any
+//	node never differ by more than one.	
+	
 //	This improved algorithm works by checking the height of each subtree as we recurse down from the root.
 //	On each node, we recursively get the heights of the left and right subtrees through the checkHeight
 //	method. If the subtree is balanced, then checkHeight will return the actual height of the subtree. If the

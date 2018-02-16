@@ -6,6 +6,8 @@ import java.util.Set;
 
 import CtCILibrary.LinkedListNode;
 
+//Remove Dups: Write code to remove duplicates from an unsorted linked list.
+
 public class MyAnswer {
    // Use HashSet to check duplicate
 	public static LinkedListNode deleteDupsA(LinkedListNode head) {

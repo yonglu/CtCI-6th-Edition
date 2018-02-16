@@ -2,6 +2,8 @@ package Introduction;
 
 import java.util.NoSuchElementException;
 
+// Implement queue from Array
+
 public class MyQueue2 {
    private int QUEUE_SIZE = 102;
    private int[] data = new int[QUEUE_SIZE];

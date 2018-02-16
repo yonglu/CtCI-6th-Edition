@@ -2,6 +2,8 @@ package Q4_05_Validate_BST;
 
 import CtCILibrary.TreeNode;
 
+// Validate BST: Implement a function to check if a binary tree is a binary search tree.
+
 public class Question {
 	public static Integer last_printed = null;
 

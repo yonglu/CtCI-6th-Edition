@@ -2,6 +2,8 @@ package Introduction;
 
 import java.util.EmptyStackException;
 
+// Implement stack from LinkedList
+
 public class MyStack<T> {
 	private static class StackNode<T> {
 		private T data;

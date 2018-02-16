@@ -2,6 +2,14 @@ package Q1_03_URLify;
 
 import CtCILibrary.AssortedMethods;
 
+//URLify: Write a method to replace all spaces in a string with '%20: You may assume that the string
+//has sufficient space at the end to hold the additional characters, and that you are given the "true"
+//length of the string. (Note: If implementing in Java, please use a character array so that you can
+//perform this operation in place.)
+//EXAMPLE
+//Input: "Mr John Smith "J 13
+//Output: "Mr%20J ohn%20Smith"
+
 public class MyAnswer {
 	// Assume string has sufficient free space at the end
 	public static void replaceSpaces(char[] str, int trueLength) {

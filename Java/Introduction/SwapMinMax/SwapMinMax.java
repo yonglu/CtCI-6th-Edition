@@ -31,6 +31,7 @@ public class SwapMinMax {
 	}
 	
 	public static void swapMinMaxBetter(int[] array) {
+		// TODO  Just find both max and min in one loop
 		int minIndex = getMinIndex(array);
 		int maxIndex = getMaxIndex(array);
 		swap(array, minIndex, maxIndex);

@@ -1,5 +1,11 @@
 package Q3_02_Stack_Min;
 
+//Stack Min: How would you design a stack which, in addition to push and pop, has a function min
+//which returns the minimum element? Push, pop and min should all operate in 0(1) time.
+//		
+//		1. Keep track of min in the Node
+//		2. Have another internal stack to keep track of min
+//		
 public class Question {
 	public static void main(String[] args) {
 		StackWithMin stack = new StackWithMin();

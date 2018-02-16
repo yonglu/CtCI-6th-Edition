@@ -1,5 +1,8 @@
 package Q1_01_Is_Unique;
 
+//Is Unique: Implement an algorithm to determine if a string has all unique characters. What if you
+//cannot use additional data structures?
+
 public class MyAnswer {
 	public static boolean isUniqueChars(String str) {
 		if (str == null) {

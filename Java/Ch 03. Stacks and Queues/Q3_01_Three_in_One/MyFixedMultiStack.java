@@ -4,6 +4,8 @@ import java.util.EmptyStackException;
 
 import CtCILibrary.AssortedMethods;
 
+//Three in One: Describe how you could use a single array to implement three stacks.
+
 public class MyFixedMultiStack {
 	private int numberOfStacks = 3;
 	private int stackCapacity;

@@ -2,6 +2,9 @@ package Q1_02_Check_Permutation;
 
 import java.util.Arrays;
 
+//Check Permutation: Given two strings, write a method to decide if one is a permutation of the
+//other.
+
 public class MyAnswer {	
 	
 	public static boolean permutation(final String s, final String t) {

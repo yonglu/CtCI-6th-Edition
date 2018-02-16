@@ -2,6 +2,8 @@ package Introduction;
 
 import java.util.NoSuchElementException;
 
+// Implement queue from LinkedList
+
 public class MyQueue<T> {
 	private static class QueueNode<T> {
 		private T data;

@@ -2,6 +2,8 @@ package Q8_04_Power_Set;
 
 import java.util.*;
 
+// Power Set: Write a method to return all subsets of a set.
+
 public class MyAnswer {
 
 	public static ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set) {

@@ -2,6 +2,9 @@ package Q1_07_Rotate_Matrix;
 
 import CtCILibrary.*;
 
+//Rotate Matrix: Given an image represented by an NxN matrix, where each pixel in the image is 4
+//bytes, write a method to rotate the image by 90 degrees. (an you do this in place?
+
 public class MyAnswer {
 
 	public static boolean rotate(int[][] matrix) {

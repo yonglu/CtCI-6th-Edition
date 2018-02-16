@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
+//List of Depths: Given a binary tree, design an algorithm which creates a linked list of all the nodes
+//at each depth (e.g., if you have a tree with depth 0, you'll have 0 linked lists).
+
 public class MyAnswerBFS {
 
 	// See QuestionBFS.java for cleaner implementation
