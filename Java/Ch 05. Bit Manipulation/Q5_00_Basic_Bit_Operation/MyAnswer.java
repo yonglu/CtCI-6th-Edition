@@ -13,18 +13,18 @@ public class MyAnswer {
     
     // 
     public static boolean getBit(int n, int i) {
-    	int a = (n >> i) & 1;   	
-    	return a == 1;
-    }
-    
-    public static int clearBit(int n, int i) {
-    	int mask = ~(1 << i);   	
-    	return (n & mask);
+       int mask = 1 << i;      
+       return ((n & mask) != 0);
     }
     
     public static int setBit(int n, int i) {
-    	int mask = 1 << i;   	
-    	return (n | mask);
+       int mask = 1 << i;      
+       return (n | mask);
+     }
+     
+    public static int clearBit(int n, int i) {
+    	int mask = ~(1 << i);   	
+    	return (n & mask);
     }
     
     public static int updateBit(int n, int i, boolean flag) {
@@ -37,8 +37,11 @@ public class MyAnswer {
 
     public static int swapBits(int n, int i, int j) { 
     	
-        int a = (n >> i) & 1;
-        int b = (n >> j) & 1;
+       int maskA = 1 << i;      
+       int maskB = 1 << j;      
+
+        int a = n & maskA;
+        int b = n & maskB;
         
         // only swap if they are different
         if (a != b) {
