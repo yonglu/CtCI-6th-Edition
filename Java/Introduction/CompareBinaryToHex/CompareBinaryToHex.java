@@ -36,7 +36,7 @@ public class CompareBinaryToHex {
          i++;
       }
       for (int j=i; j<number.length();j++) {
-        int digit = digitToValue(number.charAt(i));
+        int digit = digitToValue(number.charAt(j));
         num = num * base + digit;
       }
       if (neg) {
