@@ -27,6 +27,25 @@ public class CompareBinaryToHex {
 		return value;
 	}
 	
+   public static int convertFromBase2(String number, int base) {
+      int i = 0; 
+      int num = 0;
+      boolean neg = false;
+      if (number.charAt(i) == '-') {
+         neg = true;
+         i++;
+      }
+      for (int j=i; j<number.length();j++) {
+        int digit = digitToValue(number.charAt(i));
+        num = num * base + digit;
+      }
+      if (neg) {
+         num = -1 * num;
+      }
+      return num;
+   }
+
+	
 	public static boolean compareBinToHex(String binary, String hex) {
 		int n1 = convertFromBase(binary, 2);
 		int n2 = convertFromBase(hex, 16);
@@ -36,8 +55,18 @@ public class CompareBinaryToHex {
 		return n1 == n2;
 	}
 	
+   public static boolean compareBinToHex2(String binary, String hex) {
+      int n1 = convertFromBase2(binary, 2);
+      int n2 = convertFromBase2(hex, 16);
+      if (n1 < 0 || n2 < 0) {
+         return false;
+      }
+      return n1 == n2;
+   }
+
 	public static void main(String[] args) {
 		System.out.println(compareBinToHex("111001011", "1CB"));
+      System.out.println(compareBinToHex2("111001011", "1CB"));
 	}
 
 }
