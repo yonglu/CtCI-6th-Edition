@@ -1,5 +1,8 @@
 package Arithmetic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ItoAAtoI {
 
@@ -81,10 +84,56 @@ public class ItoAAtoI {
     	return n;
     }
 	
+    public static int strToInt2(String str) {
+       int i = 0; 
+       int num = 0;
+       boolean neg = false;
+       if (str.charAt(i) == '-') {
+          neg = true;
+          i++;
+       }
+       for (int j=i; j<str.length();j++) {
+         int digit = str.charAt(j) - '0';
+         num = num * 10 + digit;
+       }
+       if (neg) {
+          num = -1 * num;
+       }
+       return num;
+    }
+
+    public static String intToStr2(int num) {
+       StringBuilder sb = new StringBuilder();
+       List<Character> digits = new ArrayList<Character>();
+       // if negative number
+       // TODO just check if (num < 0)
+       if ((num >> 31) != 0) {
+          sb.append("-");
+          num = -num;
+       }       
+       
+       while (num > 0) {
+          int digit = num % 10;
+          digits.add((char)(digit + '0'));
+          num = num / 10;
+       }
+       
+       for(int i=digits.size()-1; i>=0; i--) {
+          sb.append(digits.get(i));
+       }
+       
+       return sb.toString();
+    }
 	
 	public static void main(String[] args) {
 		System.out.println(intToStr(12345));
+      System.out.println(intToStr(-12345));
+      System.out.println(intToStr2(12345));
+      System.out.println(intToStr2(-12345));
 		System.out.println(strToInt("654321"));
+      System.out.println(strToInt("-654321"));
+      System.out.println(strToInt2("654321"));
+      System.out.println(strToInt2("-654321"));
 		System.out.println(reverseInt(12345));
 		System.out.println(reverseBits(12344));
 	}
