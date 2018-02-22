@@ -33,13 +33,12 @@ public class EquilibriumIndexOfAnArray {
 
       for (int i = 0; i < n; ++i)
       {
-          sum -= arr[i]; // sum is now right sum for index i
-
-          if (leftsum == sum) {
-          	System.out.println("equilibrium index is " + i);
-          }
-
-          leftsum += arr[i];
+    	  int rightsum = sum - leftsum - arr[i];
+    	  if (leftsum == rightsum) {
+    		  System.out.println("equilibrium index is " + i);
+    	  }
+    	  
+    	  leftsum += arr[i];
       }
 
       /* If no equilibrium index found, then return 0 */
