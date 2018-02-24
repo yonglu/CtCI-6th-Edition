@@ -32,10 +32,10 @@ public class Permutation_of_string {
 		int matchCount = 0;
 		int[] tempMap = Arrays.copyOf(s1Map, s1Map.length);
 		for (int i = 0; i < s2Part.length(); i++) {
-			if (tempMap[s2Part.charAt(i)] <= 0 ) {
+			tempMap[s2Part.charAt(i)] = tempMap[s2Part.charAt(i)] - 1;
+			if (tempMap[s2Part.charAt(i)] < 0 ) {
 				return false;
 			}
-			tempMap[s2Part.charAt(i)] = tempMap[s2Part.charAt(i)] - 1;
 		}
 		return true;
 	}
