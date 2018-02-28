@@ -24,11 +24,10 @@ public class PrintAllStringCombinations {
 	        	char[] temp_str = new char[n];
 	        	temp_str[i] = 'a';
 	        	temp_str[j] = 'a';
-	    		boolean[] remainLoc = new boolean[n];
-	    		Arrays.fill(remainLoc, true);
-	    		remainLoc[i] = false;
-	        	remainLoc[j] = false;
-	            constructString(n, remainLoc, temp_str);                    
+	    		boolean[] filledLoc = new boolean[n];
+	    		filledLoc[i] = true;
+	        	filledLoc[j] = true;
+	            constructString(n, filledLoc, temp_str);                    
 	        }
 	    }
 
@@ -37,7 +36,7 @@ public class PrintAllStringCombinations {
 	public static void constructString(int n, boolean[] remainLoc, char[] temp_str) {
 	    int remain = -1;
 	    for (int k = 0; k < n; k++) {
-	    	if (remainLoc[k] == true) {
+	    	if (remainLoc[k] == false) {
 	    		remain = k;
 	    		break;
 	    	}
@@ -50,10 +49,10 @@ public class PrintAllStringCombinations {
 	    
 	    for (Character c: allowChars) {
 	    	temp_str[remain] = c;
-		    remainLoc[remain] = false;
+		    remainLoc[remain] = true;
 	    	constructString(n, remainLoc, temp_str); 
 	    	//TODO forgot to do the backtracking in first run.
-		    remainLoc[remain] = true;
+		    remainLoc[remain] = false;
 	    }
 	}
 	
