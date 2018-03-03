@@ -18,7 +18,6 @@ import java.util.List;
 //
 // Input: {1, 1, 0, -1, -2}
 // Output: 2 
-//Recommended: Please solve it on “PRACTICE” first, before moving on to the solution.
 //
 //A naive method to solve this problem is to search all positive integers, starting from 1 in the given array. 
 //We may have to search at most n+1 numbers in the given array. So this solution takes O(n^2) in worst case.
@@ -128,7 +127,7 @@ public class MinimumMissingPositiveNumberFromUnsortedArray {
    }
 
    public static void main(String[] args) {
-      int arr[] = { 0, 10, 2, -10, -20 };
+      int arr[] = { 3, 10, 2, -10, -20 };
       int arr_size = arr.length;
       int missing = findMissing(arr, arr_size);
       System.out.println("The smallest positive missing number is " +

@@ -7,7 +7,31 @@ import java.util.Arrays;
  * 
  */
 public class MaxConsecutiveRepeatingCharacters {  
-   public static char maxRepeating(String str) {
+   public static char myMaxRepeating(String str) {
+	   char result;
+	   if (str == null) {
+		   throw new IllegalArgumentException("String cannot be null");
+	   }
+	   result = str.charAt(0);
+	   int count = Integer.MIN_VALUE;
+	   int runningCount = 1;
+	   char previousChar = result;
+	   for ( int i = 1; i < str.length(); i++) {
+		   if (previousChar == str.charAt(i)) {
+			   runningCount++;
+		   } else {
+			   runningCount = 1;
+			   previousChar = str.charAt(i);
+		   }
+		   if (runningCount > count) {
+			   count = runningCount;
+			   result = str.charAt(i);
+		   }
+	   }
+	   return result;
+   }
+
+   public static char maxRepeating2(String str) {
 	   if (str == null) {
 		   throw new IllegalArgumentException("String cannot be null");
 	   }
@@ -32,8 +56,8 @@ public class MaxConsecutiveRepeatingCharacters {
 
    public static void main(String[] args) {
        String str = "aaaabbaaccde";
-       System.out.println(maxRepeating(str));
+       System.out.println(myMaxRepeating(str));
        str = "abcdefgg";
-       System.out.println(maxRepeating(str));
+       System.out.println(myMaxRepeating(str));
    }
 }
