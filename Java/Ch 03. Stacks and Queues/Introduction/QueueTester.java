@@ -12,7 +12,7 @@ public class QueueTester {
 		int[] array = AssortedMethods.randomArray(100, -100, 100);
 		MyQueue<Integer> queue1 = new MyQueue<Integer>();		
 		Queue<Integer> queue2 = new LinkedList<Integer>();
-      MyQueue2 queue3 = new MyQueue2();
+		MyQueue2 queue3 = new MyQueue2();
 		
 		for (int a : array) {
 			if (a < 0) {
