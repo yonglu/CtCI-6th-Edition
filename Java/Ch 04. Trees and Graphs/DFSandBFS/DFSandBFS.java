@@ -12,20 +12,40 @@ public class DFSandBFS {
 	
 
 	public static void searchDFS(Node root) {
-	    if (root == null || root.state == State.COMPLETE) 
+	    if (root == null) 
 	        return;
-	    System.out.println(root.name);
 	    root.state = State.COMPLETE;
+	    System.out.print(root.name + " ");
 	    for (Node node : root.children) {
-	        if (node.state == State.BLANK) {
+	        if (node != null && node.state == State.BLANK) {
 	            searchDFS(node);
 	        }
 	    }
 	 }
 	
+    // Iterative DFS using internal stack and return queue
+   public static void searchDFSWithStackAndReturnQueue(Node root, Queue<Node> returnQ)
+   {
+       Stack<Node> internalStack=new Stack<Node>();
+       internalStack.add(root);
+       while (!internalStack.isEmpty())
+       {
+           Node element=internalStack.pop();
+    	   element.state = State.COMPLETE;
+    	   // Print out and add to return queue
+    	   System.out.print(element.name + " ");
+    	   returnQ.add(element);
+	   	   for (Node node : element.children) {
+		        if (node != null && node.state == State.BLANK) {
+		            internalStack.add(node);
+		        }
+		    }
+       }
+   }
+   	   
 	// different from searchDFS: check cycle and return Stack<Node>
-	public static boolean searchDFSWithStack(Node root, Stack<Node> stack) {
-	    if (root == null || root.state == State.COMPLETE) {
+	public static boolean searchDFSWithReturnStack(Node root, Stack<Node> returnStack) {
+	    if (root == null) {
 	        return true;
 	    }
 	    
@@ -37,8 +57,8 @@ public class DFSandBFS {
 //	    root.state = State.COMPLETE;
 		root.state = State.PARTIAL;
 	    for (Node node : root.children) {
-	        if (node.state == State.BLANK) {
-				if (!searchDFSWithStack(node, stack)) {
+	        if (node != null && node.state == State.BLANK) {
+				if (!searchDFSWithReturnStack(node, returnStack)) {
 					return false;
 				}
 	        }
@@ -46,86 +66,82 @@ public class DFSandBFS {
 	    root.state = State.COMPLETE;
 	    // note, not easy to use queue because we have to add to queue after set state to partial 
 	    // but we also want to set the state to COMPLETE after done too.
-	    stack.add(root);
+	    returnStack.add(root);
 	    
 		return true;
 	 }
 	
-	
-	public static void searchBFS(Node root) {
-		if (root == null || root.state == State.COMPLETE)
+	// searchBFS and return Queue<Node>
+	public static void searchBFSWithReturnQueue(Node root, Queue<Node> returnQ) {
+		if (root == null)
 			return;
 		Queue queue = new LinkedList();
-	    root.state = State.COMPLETE;
 	    queue.add(root); // Add to the end of queue
 
 	    while (!queue.isEmpty()) {
 	        Node r = (Node)queue.poll(); // Remove from the front of the queue
-	        System.out.println(r.name);
-	        for (Node node : r.children) {
-		        if (node.state == State.BLANK) {
-		        	node.state = State.COMPLETE;
-		            queue.add(node);
-		        }
-		    }	        
-	    }
-	 }
-	
-	// different from searchBFS: return Queue<Node>
-	public static void searchBFSWithQueue(Node root, Queue<Node> returnQ) {
-		if (root == null || root.state == State.COMPLETE)
-			return;
-		Queue queue = new LinkedList();
-	    root.state = State.COMPLETE;
-	    queue.add(root); // Add to the end of queue
-
-	    while (!queue.isEmpty()) {
-	        Node r = (Node)queue.poll(); // Remove from the front of the queue
-//	        System.out.println(r.name);
+        	r.state = State.COMPLETE;
+	        System.out.print(r.name + " ");
 	        returnQ.add(r);
 	        for (Node node : r.children) {
-		        if (node.state == State.BLANK) {
-		        	node.state = State.COMPLETE;
+		        if (node != null && node.state == State.BLANK) {
 		            queue.add(node);
 		        }
 		    }	        
 	    }
-	 }
-	
+	 }	
 		
 	public static void main(String[] args) {
 			
 		Graph graphDFS = new Graph(createNodes());		
-		System.out.println("Print DFS:");
+		System.out.println("Print DFS recursive:");
+		System.out.print("    ");
 		for (Node node: graphDFS.nodes) {
 			searchDFS(node);
 		}
-		
-		Graph graphBFS = new Graph(createNodes());
-		System.out.println("Print BFS:");
-		for (Node node: graphBFS.nodes) {
-			searchBFS(node);
+	    System.out.println();
+	    
+		Queue<Node> returnQ = new LinkedList<Node>();
+		Graph graphDFSWithStack = new Graph(createNodes());		
+		System.out.println("Print DFS Iterative using stack:");
+		System.out.print("    ");
+		for (Node node: graphDFSWithStack.nodes) {
+			searchDFSWithStackAndReturnQueue(node, returnQ);
 		}
-		
+	    System.out.println();
+	    
+		System.out.println("Print DFS Iterative in Return Queue:");
+		System.out.print("    ");
+		convertQueueToStringList(returnQ);
+	    System.out.println();
+	    
+
 		Stack<Node> stack = new Stack<Node>();
 		Graph graphDFSStack = new Graph(createNodes());		
-		System.out.println("Print DFS in Stack:");
+		System.out.println("Print DFS in Return Stack:");
+		System.out.print("    ");
 		for (Node node: graphDFSStack.nodes) {
-			boolean notCycle = searchDFSWithStack(node, stack);
+			boolean notCycle = searchDFSWithReturnStack(node, stack);
 			if (!notCycle) {
 				System.out.println("Detect cycle");
 				break;
 			}
 		}
 		convertStackToStringList(stack);
-		
-		Queue<Node> returnQ = new LinkedList<Node>();
+	    System.out.println();
+
+	    Queue<Node> returnQ2 = new LinkedList<Node>();
 		Graph graphBFSStack = new Graph(createNodes());		
-		System.out.println("Print BFS in Queue:");
+		System.out.println("Print BFS:");
+		System.out.print("    ");
 		for (Node node: graphBFSStack.nodes) {
-			searchBFSWithQueue(node, returnQ); 
+			searchBFSWithReturnQueue(node, returnQ2); 
 		}
-		convertQueueToStringList(returnQ);
+	    System.out.println();
+		System.out.println("Print BFS in Return Queue:");
+		System.out.print("    ");
+		convertQueueToStringList(returnQ2);
+	    System.out.println();
 		
 	}
 	
@@ -135,7 +151,7 @@ public class DFSandBFS {
 			nodeOrder[i] = stack.pop().name;
 		}
 		for (String str : nodeOrder) {
-			System.out.println(str);
+			System.out.print(str + " ");
 		}
 		return nodeOrder;
 	}
@@ -146,7 +162,7 @@ public class DFSandBFS {
 			nodeOrder[i] = queue.poll().name;
 		}
 		for (String str : nodeOrder) {
-			System.out.println(str);
+			System.out.print(str + " ");
 		}
 		return nodeOrder;
 	}
