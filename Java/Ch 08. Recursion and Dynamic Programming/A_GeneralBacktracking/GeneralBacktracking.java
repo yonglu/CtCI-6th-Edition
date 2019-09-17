@@ -10,6 +10,10 @@ import java.util.*;
  *    It can work for Permutation too, but the code pattern is different and
  *    doesn't work if there is duplicate items in the array or string.  Use different 
  *    technique for permutation. 
+ *    
+ *    https://medium.com/leetcode-patterns/leetcode-pattern-3-backtracking-5d9e5a03dc26
+ *    
+ *    https://leetcode.com/problems/permutations/discuss/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)
  */
 public class GeneralBacktracking {
 
@@ -44,13 +48,13 @@ public class GeneralBacktracking {
      } else if(remain == 0) {
         list.add(new ArrayList<>(tempList));
         return;
-     } else{ 
-         for(int i = start; i < nums.length; i++){
-             tempList.add(nums[i]);
-             combinationSum(list, tempList, nums, remain - nums[i], i+1); // if we cannot reuse same elements
+     }
+     
+     for(int i = start; i < nums.length; i++){
+         tempList.add(nums[i]);
+         combinationSum(list, tempList, nums, remain - nums[i], i+1); // if we cannot reuse same elements
 //             combinationSum(list, tempList, nums, remain - nums[i], i); // if we can reuse same elements
-             tempList.remove(tempList.size() - 1);
-         }
+         tempList.remove(tempList.size() - 1);
      }
  }  
 
@@ -71,13 +75,12 @@ public class GeneralBacktracking {
  public static void palindromePartition(List<List<String>> list, List<String> tempList, String s, int start){
     if(start == s.length())
        list.add(new ArrayList<>(tempList));
-    else{
-       for(int i = start; i < s.length(); i++){
-          if(isPalindrome(s, start, i)){
-             tempList.add(s.substring(start, i + 1));
-             palindromePartition(list, tempList, s, i + 1);
-             tempList.remove(tempList.size() - 1);
-          }
+    
+    for(int i = start; i < s.length(); i++){
+       if(isPalindrome(s, start, i)){
+          tempList.add(s.substring(start, i + 1));
+          palindromePartition(list, tempList, s, i + 1);
+          tempList.remove(tempList.size() - 1);
        }
     }
  }
@@ -103,13 +106,13 @@ public class GeneralBacktracking {
   private static void permute(List<List<Integer>> list, List<Integer> tempList, int [] nums){
      if(tempList.size() == nums.length){
         list.add(new ArrayList<Integer>(tempList));
-     } else{
-        for(int i = 0; i < nums.length; i++){ 
-           if(tempList.contains(nums[i])) continue; // element already exists, skip
-           tempList.add(nums[i]);
-           permute(list, tempList, nums);
-           tempList.remove(tempList.size() - 1);
-        }
+     }
+     
+     for(int i = 0; i < nums.length; i++){ 
+        if(tempList.contains(nums[i])) continue; // element already exists, skip
+        tempList.add(nums[i]);
+        permute(list, tempList, nums);
+        tempList.remove(tempList.size() - 1);
      }
   }   
   
