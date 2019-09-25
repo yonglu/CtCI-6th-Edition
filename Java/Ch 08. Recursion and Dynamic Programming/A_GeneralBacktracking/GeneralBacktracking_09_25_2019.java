@@ -60,8 +60,11 @@ public class GeneralBacktracking_09_25_2019 {
 	 * 
 	 * Input: [1,2,2] 
 	 * Output: [ [2], [1], [1,2,2], [2,2], [1,2], [] ]
+	 * 
 	 */
-
+	
+	// Approach: Sort the given array beforehand and skip over duplicates while backtracking,
+	//           and it is the only different than subsets problem
 	public static List<List<Integer>> subsetsWithDup(int[] nums) {
 		List<List<Integer>> lists = new ArrayList<>();
 		// sort() for de-duplicates
@@ -278,7 +281,7 @@ public class GeneralBacktracking_09_25_2019 {
 		}
 
 		
-		List<List<Integer>> results = subsetsWithDup(new int[] { 1, 2, 2, 2 });
+		List<List<Integer>> results = subsetsWithDup(new int[] { 1, 2, 2 });
 		System.out.println("Subset with Dup:");
 		for (List<Integer> subset : results) {
 			System.out.println(subset.toString());
