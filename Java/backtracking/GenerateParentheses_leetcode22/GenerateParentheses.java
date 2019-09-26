@@ -135,21 +135,24 @@ public class GenerateParentheses {
 
 	public static void main(String[] args) {
 		long currentTime = System.currentTimeMillis();
-		List<String> results = generateParenthesisBacktracking(5);
-		System.out.println("Generate Parenthesis by Backtracking: 3");
+		List<String> results = generateParenthesisBacktracking(4);
+		System.out.println("Generate Parenthesis by Backtracking: 4");
 		for (String str : results) {
 			System.out.println(str);
 		}
 		System.out.println(System.currentTimeMillis() - currentTime);
 		
 		currentTime = System.currentTimeMillis();
-		results = generateParenthesisDFS(5);
-		System.out.println("Generate Parenthesis by DFS: 3");
+		results = generateParenthesisDFS(4);
+		System.out.println("Generate Parenthesis by DFS: 4");
 		for (String str : results) {
 			System.out.println(str);
 		}
 		System.out.println(System.currentTimeMillis() - currentTime);
 		
 		System.out.println("Backtracking is slower!!");
+		System.out.println("Because it is a generalization form of DFS where it");
+		System.out.println("branches on all combinations (unvisited nodes in '((()))',");
+		System.out.println("while DFS will only branches on '(' and ')'");
 	}
 }
