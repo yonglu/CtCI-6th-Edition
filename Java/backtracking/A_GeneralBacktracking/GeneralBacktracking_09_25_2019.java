@@ -294,9 +294,28 @@ public class GeneralBacktracking_09_25_2019 {
 	
 	
 	/*
-	 * It can work for Permutation too, but the code pattern is different and
-	 * doesn't work if there is duplicate items in the array or string. Use
-	 * different technique for permutation.
+	 * Leetcode # 46
+	 * https://leetcode.com/problems/permutations/
+	 * 
+	 * Given a collection of distinct integers, return all possible permutations.
+	 * Example:
+	 * Input: [1,2,3]
+	 * Output:
+	 * [
+	 *   [1,2,3],
+  	 *   [1,3,2],
+     *   [2,1,3],
+     *   [2,3,1],
+     *   [3,1,2],
+     *   [3,2,1]
+     * ]
+     * 
+     * The permutation is similar as the last power set, the difference is we use 
+	 * each element at least and only one time, and we don't care about the order. 
+	 * 
+	 * 		1. at least one time - for loop starts from 0
+	 * 		2. only one time - check if element already visited
+	 * 
 	 */
 	public static List<List<Integer>> permute(int[] nums) {
 		List<List<Integer>> list = new ArrayList<>();
@@ -318,6 +337,56 @@ public class GeneralBacktracking_09_25_2019 {
 			tempList.remove(tempList.size() - 1);
 		}
 	}
+	
+	/*
+	 * Leetcode # 47
+	 * https://leetcode.com/problems/permutations-ii/
+	 * 
+	 * Given a collection of numbers that might contain duplicates, 
+	 * return all possible unique permutations.
+	 * 
+	 * Example:
+	 * Input: [1,2,1]
+	 * Output:
+	 * [
+	 *   [1,1,2],
+  	 *   [1,2,1],
+     *   [2,1,1],
+     * ]
+     * 
+     * This is similar to the permutation one except it may contain duplicates. 
+     * 
+     * 		1. sort the number array
+	 * 		2. at least one time - for loop starts from 0
+	 * 		3. only one time - check if element already visited
+	 * 		4. have duplicate - skip the duplicate that has been visited
+	 * 
+	 */
+	public static List<List<Integer>> permuteUnique(int[] nums) {
+		List<List<Integer>> list = new ArrayList<>();
+		Arrays.sort(nums);
+		boolean[] visited = new boolean[nums.length];
+		Arrays.fill(visited, false);
+		permuteUnique(list, visited, new ArrayList<Integer>(), nums);
+		return list;
+	}
+
+	private static void permuteUnique(List<List<Integer>> list, boolean[] visited, List<Integer> tempList, int[] nums) {
+		if (tempList.size() == nums.length) {
+			list.add(new ArrayList<Integer>(tempList));
+		}
+
+		for (int i = 0; i < nums.length; i++) {
+			if (visited[i] || (i > 0 && nums[i] == nums[i-1] && visited[i-1]))
+				continue; // element already visited, skip
+			visited[i] = true;
+			tempList.add(nums[i]);
+			permuteUnique(list, visited, tempList, nums);
+			tempList.remove(tempList.size() - 1);
+			visited[i] = false;
+		}
+	}
+	
 
 	public static void main(String[] args) {
 		int[] set = new int[] { 2, 3, 5, 6, 7 };
@@ -361,11 +430,18 @@ public class GeneralBacktracking_09_25_2019 {
 			System.out.println(subset.toString());
 		}
 
-		List<List<Integer>> results5 = permute(new int[] { 2, 3, 4 });
+		List<List<Integer>> results5 = permute(new int[] { 1, 2, 3 });
 		System.out.println("Permute:");
 		for (List<Integer> subset : results5) {
 			System.out.println(subset.toString());
 		}
+
+		List<List<Integer>> results7 = permuteUnique(new int[] { 1, 2, 1});
+		System.out.println("PermuteUnique:");
+		for (List<Integer> subset : results7) {
+			System.out.println(subset.toString());
+		}
+	
 	}
 
 }
