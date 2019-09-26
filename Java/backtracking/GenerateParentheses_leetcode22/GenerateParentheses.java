@@ -22,6 +22,39 @@ import java.util.*;
 
 public class GenerateParentheses {
 
+	public static List<String> generateParenthesisDFS(int n) {
+		List<String> lists = new ArrayList<String>();
+
+		generateParenthesisDFS(lists, new StringBuilder(), 0, 0 , n);
+		
+		return lists;		
+	}
+
+	private static void generateParenthesisDFS(List<String> lists,  
+			StringBuilder tempResult, int lpCount, int rpCount, int n) {
+		if (lpCount < rpCount) {
+			return;
+		}
+
+		if (lpCount == n && rpCount == n) {
+			lists.add(new String(tempResult.toString()));
+			return;
+		}
+		
+		if (lpCount < n) {
+			tempResult.append('(');
+			generateParenthesisDFS(lists, tempResult, lpCount+1, rpCount, n);
+			tempResult.deleteCharAt(tempResult.length()-1);
+		}
+		
+		if (rpCount < n) {
+			tempResult.append(')');
+			generateParenthesisDFS(lists, tempResult, lpCount, rpCount+1, n);
+			tempResult.deleteCharAt(tempResult.length()-1);
+		}
+		
+		return;
+	}	
 	public static List<String> generateParenthesisBacktracking(int n) {
 		
 		List<String> lists = new ArrayList<String>();
@@ -48,6 +81,7 @@ public class GenerateParentheses {
 			StringBuilder tempResult, char[] input) {
 		if (tempResult.length() == input.length && doneParenthesis(tempResult)) {
 			lists.add(new String(tempResult.toString()));
+			return;
 		}
 		
 		for (int i = 0; i < input.length; i++) {
@@ -64,6 +98,7 @@ public class GenerateParentheses {
 			tempResult.deleteCharAt(tempResult.length() - 1);
 			visited[i] = false;
 		}
+		return;
 	}
 	
 	// can add if it is not right parenthesis or if we have more left parenthesis than right
@@ -99,11 +134,22 @@ public class GenerateParentheses {
 	}
 
 	public static void main(String[] args) {
-		List<String> results = generateParenthesisBacktracking(3);
-		System.out.println("Generate Parenthesis: 3");
+		long currentTime = System.currentTimeMillis();
+		List<String> results = generateParenthesisBacktracking(5);
+		System.out.println("Generate Parenthesis by Backtracking: 3");
 		for (String str : results) {
 			System.out.println(str);
-
 		}
+		System.out.println(System.currentTimeMillis() - currentTime);
+		
+		currentTime = System.currentTimeMillis();
+		results = generateParenthesisDFS(5);
+		System.out.println("Generate Parenthesis by DFS: 3");
+		for (String str : results) {
+			System.out.println(str);
+		}
+		System.out.println(System.currentTimeMillis() - currentTime);
+		
+		System.out.println("Backtracking is slower!!");
 	}
 }
