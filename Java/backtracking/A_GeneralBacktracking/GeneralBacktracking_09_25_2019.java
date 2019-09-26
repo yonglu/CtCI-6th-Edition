@@ -33,6 +33,19 @@ import java.util.*;
  *				(it would work if loop through rows and backtracking on columns).  
  *				This is more efficient that DFS because only one queen per row and column.
  *
+ *  Depth-First search is a specific form of backtracking related to searching tree structures.  
+ *  Backtracking is DFS for implicit tree, while DFS is backtracking without pruning. 
+ *  Usually, a depth-first-search is a way of iterating through an actual graph/tree structure 
+ *  looking for a value, whereas backtracking is iterating through a problem space looking for 
+ *  a solution.  (Here is a pretty good explainiation of the concept: 
+ *  http://exceptional-code.blogspot.com/2012/09/generating-all-permutations.html)
+ *  
+ *  In the Subsets and Combinations cases, the DFS branches are just the rest of 
+ *  characters/numbers in the array. 
+ *  
+ *  For the permutation case, the DFS branches are every characters/numbers that 
+ *  have not been visited. 
+ *  
  */
 public class GeneralBacktracking_09_25_2019 {
 	
