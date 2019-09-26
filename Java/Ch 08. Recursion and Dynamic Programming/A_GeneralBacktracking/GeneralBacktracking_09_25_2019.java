@@ -229,21 +229,51 @@ public class GeneralBacktracking_09_25_2019 {
 		return;
 	}
 
-	// Given a string s, partition s such that every substring of the partition is a
-	// palindrome.
-	// Return all possible palindrome partitioning of s.
-	// For example, given s = "aab",
-	// return:
-	// [
-	// ["aa","b"],
-	// ["a","a","b"]
-	// ]
+	/*
+	 * Leetcode # 131 
+	 * https://leetcode.com/problems/palindrome-partitioning/ 
+	 * 
+	 * Given a string s, partition s such that every substring of the partition is a
+	 * palindrome. Return all possible palindrome partitioning of s. 
+	 * 
+	 * For example,
+	 * given s = "aab", 
+	 * return: [ ["aa","b"], ["a","a","b"] ]
+	 */
 
 	public static List<List<String>> palindromePartition(String s) {
-		List<List<String>> list = new ArrayList<>();
-		return list;
+		List<List<String>> lists = new ArrayList<>();
+		if (s == null || s.isEmpty()) {
+			return lists;
+		}
+		palindromePartition(lists, new ArrayList<String>(), s, 0);
+		return lists;
 	}
 
+	private static void palindromePartition(List<List<String>> lists, List<String> tempList, 
+			String s, int start) {
+		if ( start == s.length()) {
+			lists.add(new ArrayList<String>(tempList));
+		}
+		for (int i = start; i < s.length(); i++) {
+			if (isPalindrome(s, start, i)) {
+				tempList.add(s.substring(start, i+1));
+				palindromePartition(lists, tempList, s, i+1);
+				tempList.remove(tempList.size() - 1);
+			}
+		}
+	}
+	
+	private static boolean isPalindrome(String s, int low, int high) {
+		while (low < high) {
+			if (s.charAt(low++) != s.charAt(high--)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 	/*
 	 * It can work for Permutation too, but the code pattern is different and
 	 * doesn't work if there is duplicate items in the array or string. Use
