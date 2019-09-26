@@ -14,6 +14,25 @@ import java.util.*;
  *    https://medium.com/leetcode-patterns/leetcode-pattern-3-backtracking-5d9e5a03dc26
  *    
  *    https://leetcode.com/problems/permutations/discuss/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)
+ *  
+ *    Variation of the Base Backtracking Pattern:
+ *    
+ *    		Input contains duplicate items - 
+ *    			Sort the given array beforehand and skip over duplicates while backtracking
+ *
+ *			The item from input can be chosen unlimited time - 
+ *				use i instead of i as multiple using is permitted
+ *
+ *			If only one solution is needed, then use the boolean return in the 
+ *				recursive calls to short circuit it.
+ *
+ *			For permutation, since you need every number/character, you start the 
+ *				for loop with 0 and skip the number/char that is in the current solution.
+ *
+ *			For N-queens - loop through the columns and backtracking on rows 
+ *				(it would work if loop through rows and backtracking on columns).  
+ *				This is more efficient that DFS because only one queen per row and column.
+ *
  */
 public class GeneralBacktracking_09_25_2019 {
 	
