@@ -23,137 +23,67 @@ public class LetterCombinations {
     private static final String[] KEYS = new String[] { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv",
     "wxyz" };
 	
-	public static List<String> generateParenthesisDFS(int n) {
-		List<String> lists = new ArrayList<String>();
-
-		generateParenthesisDFS(lists, new StringBuilder(), 0, 0 , n);
+    public static List<String> letterCombinations(String digits) {
+    	
+    	List<String> lists = new ArrayList<String>();  	
+    	if (digits == null || digits.isEmpty()) {
+//    		throw new IllegalArgumentException();
+    		return lists;
+    	}
+    	
+    	// mention that you assume the digits string are valid,
+    	// otherwise will check
+    	
+    	letterCombinations(lists, new StringBuilder(), digits.toCharArray(), 0);
+    	
+    	return lists;
+    }
+    
+	public static void letterCombinations(List<String> lists, StringBuilder tempSB, 
+			char[] digitChars, int start) {
 		
-		return lists;		
-	}
-
-	private static void generateParenthesisDFS(List<String> lists,  
-			StringBuilder tempResult, int lpCount, int rpCount, int n) {
-		if (lpCount < rpCount) {
-			return;
-		}
-
-		if (lpCount == n && rpCount == n) {
-			lists.add(new String(tempResult.toString()));
-			return;
-		}
-		
-		if (lpCount < n) {
-			tempResult.append('(');
-			generateParenthesisDFS(lists, tempResult, lpCount+1, rpCount, n);
-			tempResult.deleteCharAt(tempResult.length()-1);
-		}
-		
-		if (rpCount < n) {
-			tempResult.append(')');
-			generateParenthesisDFS(lists, tempResult, lpCount, rpCount+1, n);
-			tempResult.deleteCharAt(tempResult.length()-1);
-		}
-		
-		return;
-	}	
-	public static List<String> generateParenthesisBacktracking(int n) {
-		
-		List<String> lists = new ArrayList<String>();
-		
-		if (n <= 0) return lists;
-		
-		StringBuilder inputSB = new StringBuilder();
-		for (int i = 0; i < n; i++) {
-			inputSB.append('(');
-			inputSB.append(')');
-		}
-		char[] input = inputSB.toString().toCharArray();
-		Arrays.sort(input);
-
-		boolean[] visited = new boolean[input.length];
-		
-		
-		generateParenthesisBacktracking(lists, visited, new StringBuilder(), input);
-				
-		return lists;
-	}
-	
-	private static void generateParenthesisBacktracking(List<String> lists, boolean[] visited, 
-			StringBuilder tempResult, char[] input) {
-		if (tempResult.length() == input.length && doneParenthesis(tempResult)) {
-			lists.add(new String(tempResult.toString()));
+		if (start == digitChars.length) {
+			lists.add(tempSB.toString());
 			return;
 		}
 		
-		for (int i = 0; i < input.length; i++) {
-			// Short circuit if we are going to have more right parenthesis
-			if (!checkIfCanAdd(tempResult, input[i])) {
-				continue;
-			}
-			if (visited[i] || (i > 0 && input[i] == input[i-1] && visited[i-1])) {
-				continue;
-			}
-			visited[i] = true;
-			tempResult.append(input[i]);
-			generateParenthesisBacktracking(lists, visited, tempResult, input);
-			tempResult.deleteCharAt(tempResult.length() - 1);
-			visited[i] = false;
-		}
-		return;
-	}
-	
-	// can add if it is not right parenthesis or if we have more left parenthesis than right
-	private static boolean checkIfCanAdd(StringBuilder tempResult, char next) {
-		if (next != ')') {
-			return true;
+		// handle the digit of 1 or 0
+		// no need for the original question
+		if ( digitChars[start] == '0' || digitChars[start] == '1') {
+			letterCombinations(lists, tempSB, digitChars, start+1);		
+			return;
 		}
 		
-		int countLP = 0, countRP = 0;
-		for (char c : tempResult.toString().toCharArray()) {
-			if ( c == '(') {
-				countLP++;
-			} else {
-				countRP++;
-			}
+		String values = KEYS[digitChars[start] - '0'];
+		
+		for (int i = 0; i<values.length(); i++) {
+			tempSB.append(values.charAt(i));
+			letterCombinations(lists, tempSB, digitChars, start+1);
+			tempSB.deleteCharAt(tempSB.length()-1);
 		}
-		return (countLP>countRP);
+		
+		return;		
 	}
 
-	// check if we finish
-	private static boolean doneParenthesis(StringBuilder tempResult) {
-		boolean result = false;
-		int count = 0;
-		for (char c : tempResult.toString().toCharArray()) {
-			if ( c == '(') {
-				count++;
-			}
-		}
-		if (count == tempResult.length()/2) {
-			result = true;
-		}		
-		return result;
-	}
 
 	public static void main(String[] args) {
-		long currentTime = System.currentTimeMillis();
-		List<String> results = generateParenthesisBacktracking(4);
-		System.out.println("Generate Parenthesis by Backtracking: 4");
+		List<String> results = letterCombinations("");
+		System.out.println("Letter Combinations of empty string:");
 		for (String str : results) {
 			System.out.println(str);
 		}
-		System.out.println(System.currentTimeMillis() - currentTime);
-		
-		currentTime = System.currentTimeMillis();
-		results = generateParenthesisDFS(4);
-		System.out.println("Generate Parenthesis by DFS: 4");
+
+		results = letterCombinations("23");
+		System.out.println("Letter Combinations 23:");
 		for (String str : results) {
 			System.out.println(str);
 		}
-		System.out.println(System.currentTimeMillis() - currentTime);
 		
-		System.out.println("Backtracking is slower!!");
-		System.out.println("Because it is a generalization form of DFS where it");
-		System.out.println("branches on all combinations (unvisited nodes in '((()))',");
-		System.out.println("while DFS will only branches on '(' and ')'");
+		results = letterCombinations("2066508698");
+		System.out.println("Letter Combinations 2066508698:");
+		for (String str : results) {
+			System.out.println(str);
+		}
+
 	}
 }
