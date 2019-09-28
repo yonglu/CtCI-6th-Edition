@@ -14,32 +14,34 @@ import java.util.*;
 
 public class NQueen_09_25_2019 {
 
+	// Added this for solving the Leetcode problem.
+	// Solved the original problem with different output result format
 	public static List<List<String>> solveNQueens(int n) {
 		List<List<String>> lists = new ArrayList<>();
 		List<List<Pair>> pairLists = nQueen(n);
 		lists = constructResult(pairLists, n);
-		
+
 		return lists;
 	}
 
-	
 	public static List<List<Pair>> nQueen(int n) {
 		List<List<Pair>> lists = new ArrayList<>();
-		
-		// if only one solution is needed, then use the boolean return to short curcuit it. 
+
+		// if only one solution is needed, then use the boolean return to short curcuit
+		// it.
 		nQueenAllSolutions(lists, new ArrayList<Pair>(), n, 0);
-//		nQueenOneSolutionWithShortCircuit(lists, new ArrayList<Pair>(), n, 0);
-		
+		// nQueenOneSolutionWithShortCircuit(lists, new ArrayList<Pair>(), n, 0);
+
 		return lists;
 	}
 
 	private static void nQueenAllSolutions(List<List<Pair>> lists, List<Pair> tempList, int n, int row) {
-        if (n==1) {       
-            List<Pair> myTemp = new ArrayList<Pair>();
-            myTemp.add(new Pair(0, 0));
-            lists.add(myTemp);
-            return;
-        }
+		if (n == 1) {
+			List<Pair> myTemp = new ArrayList<Pair>();
+			myTemp.add(new Pair(0, 0));
+			lists.add(myTemp);
+			return;
+		}
 		if (n < 3) {
 			return;
 		}
@@ -56,15 +58,17 @@ public class NQueen_09_25_2019 {
 		}
 		return;
 	}
-	
-	// if only one solution is needed, then use the boolean return to short circuit it. 
-	private static boolean nQueenOneSolutionWithShortCircuit(List<List<Pair>> lists, List<Pair> tempList, int n, int row) {
-        if (n==1) {       
-            List<Pair> myTemp = new ArrayList<Pair>();
-            myTemp.add(new Pair(0, 0));
-            lists.add(myTemp);
-            return true;
-        }
+
+	// if only one solution is needed, then use the boolean return to short circuit
+	// it.
+	private static boolean nQueenOneSolutionWithShortCircuit(List<List<Pair>> lists, List<Pair> tempList, 
+			int n, int row) {
+		if (n == 1) {
+			List<Pair> myTemp = new ArrayList<Pair>();
+			myTemp.add(new Pair(0, 0));
+			lists.add(myTemp);
+			return true;
+		}
 		if (n < 3) {
 			return false;
 		}
@@ -84,24 +88,22 @@ public class NQueen_09_25_2019 {
 		}
 		return false;
 	}
-	
-	
+
 	private static boolean canPlace(List<Pair> lists, int row, int col) {
 		boolean isSafe = true;
 		for (Pair pair : lists) {
 			// Check whether in the queen's col or in the queen's diagonal line
 			// Diagonal line means |row2 - row1| = |col2 - col1|
-			if (pair.getValue() == col || 
-					Math.abs(pair.getKey() - row) == Math.abs(pair.getValue() - col)) {
+			if (pair.getValue() == col || Math.abs(pair.getKey() - row) == Math.abs(pair.getValue() - col)) {
 				isSafe = false;
 			}
 		}
 		return isSafe;
 	}
-	
+
 	private static List<List<String>> constructResult(List<List<Pair>> pairLists, int n) {
 		List<List<String>> lists = new ArrayList<>();
-		for (int i = 0; i < pairLists.size(); i++ ) {
+		for (int i = 0; i < pairLists.size(); i++) {
 			List<String> tempList = new ArrayList<String>();
 			for (int j = 0; j < pairLists.get(i).size(); j++) {
 				Pair pair = pairLists.get(i).get(j);
@@ -149,7 +151,7 @@ public class NQueen_09_25_2019 {
 		}
 
 		results = nQueen(6);
-		System.out.println("NQueeens: 6");		
+		System.out.println("NQueeens: 6");
 		for (List<Pair> list : results) {
 			System.out.println();
 			for (Pair pair : list) {
@@ -165,7 +167,7 @@ public class NQueen_09_25_2019 {
 				System.out.println(pair.getKey() + ", " + pair.getValue());
 			}
 		}
-		
+
 		results = nQueen(3);
 		System.out.println("NQueeens: 3");
 		for (List<Pair> list : results) {
@@ -183,6 +185,6 @@ public class NQueen_09_25_2019 {
 				System.out.println(str);
 			}
 		}
-		
+
 	}
 }
