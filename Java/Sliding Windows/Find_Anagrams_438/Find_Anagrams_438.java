@@ -46,68 +46,56 @@ public class Find_Anagrams_438 {
 
     public static List<Integer> findAnagrams(String s, String p) {
     	List<Integer> lists = new ArrayList<Integer>();
-        
+    	
+    	if (s == null || p == null || s.length() < p.length() || s.isEmpty() || p.isEmpty()) {
+    		return lists;
+    	}
+    	
+    	// Record the String p in HaskMap
+    	Map<Character, Integer> wordMap = new HashMap<Character, Integer>();
+    	
+    	int count = 0;
+    	for (char c : p.toCharArray()) {
+    		if (wordMap.containsKey(c)) {
+    			wordMap.put(c,  wordMap.get(c) + 1);
+    		} else {
+    			wordMap.put(c, 1);
+    			count++;
+    		}
+    	}
+    	
+        int begin = 0;
+        int end = 0;
+        while (end < s.length()) {
+        	char eChar = s.charAt(end);
+        	if (wordMap.containsKey(eChar)) {
+        		int eCharCount = wordMap.get(eChar);
+        		wordMap.put(eChar,  --eCharCount);
+        		if (eCharCount == 0) {
+        			count--;
+        		}
+        	}
+        	end++;
+        	
+        	while (count == 0) {
+        		if (end-begin == p.length()) {
+        			lists.add(begin);
+        		}
+        		
+        		char bChar = s.charAt(begin);
+        		if(wordMap.containsKey(bChar)) {
+        			int bCharCount = wordMap.get(bChar);
+        			wordMap.put(bChar, ++bCharCount);
+        			if (bCharCount == 1) {
+        				count++;
+        			}
+        		}
+        		begin++;
+        	}
+        }      
+    	
     	return lists;
     }
-
-	public static String minWindow(String s, String t) {
-		
-		String result = "";
-		if (s == null || t == null || s.length() < t.length()) {
-//			throw new java.lang.IllegalArgumentException("bad parameters");
-			return result;
-		}
-		
-		Map<Character, Integer> wordMap = new HashMap<Character, Integer>();
-		int count = 0;
-		for (char c : t.toCharArray()) {
-			if (wordMap.containsKey(c)) {
-				wordMap.put(c, wordMap.get(c) + 1);
-			} else {
-				wordMap.put(c, 1);
-				count++;
-			}
-		}
-		
-		int begin = 0;
-		int end = 0;
-		int len = Integer.MAX_VALUE;
-		
-		while ( end < s.length()) {			
-			char eCh = s.charAt(end);
-			
-			// update the count if find the character
-			if (wordMap.containsKey(eCh)) {
-				int eChCount = wordMap.get(eCh);
-				wordMap.put(eCh, --eChCount);
-				if (eChCount == 0) {
-					count--;
-				}
-			}
-			end++;
-			
-			// if find the whole string t, then adjust the begin to minimum the windows
-			while (count == 0) {
-				if ( len > end - begin) {
-					len = end - begin;
-					result = s.substring(begin, end);
-				}
-				char bCh = s.charAt(begin);
-				if (wordMap.containsKey(bCh)) {
-					int bChCount = wordMap.get(bCh);
-					wordMap.put(bCh, ++bChCount);
-					if (bChCount == 1) {
-						count++;
-					}
-				}
-				
-				begin++;
-			}
-		}
-		
-		
-		return result;
-	}
 
 
 	public static void main(String[] args) {

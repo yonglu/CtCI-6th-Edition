@@ -18,6 +18,8 @@
 	<classpathentry kind="src" path="Java/Ch 17. Hard"/>
 	<classpathentry kind="src" path="Java/CtCILibrary"/>
 	<classpathentry kind="src" path="Java/backtracking"/>
+	<classpathentry kind="src" path="Java/Two Pointers"/>
+	<classpathentry kind="src" path="Java/Sliding Windows"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
