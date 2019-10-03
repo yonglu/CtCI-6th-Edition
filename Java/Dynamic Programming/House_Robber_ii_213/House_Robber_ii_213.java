@@ -34,6 +34,12 @@ Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
 
 */
 
+/*
+ * This is an extension of House Robber. There are two cases here 1) 1st element 
+ * is included and last is not included 2) 1st is not included and last is included. 
+ * Therefore, we can use the similar dynamic programming approach to scan the array 
+ * twice and get the larger value. 
+ */
 public class House_Robber_ii_213 {
 
 
@@ -43,23 +49,26 @@ public class House_Robber_ii_213 {
 		} else if (nums.length == 1) {
 			return nums[0];
 		}
-		Map<Integer, Integer> memo = new HashMap<Integer, Integer>();
-		return Math.max(rob(nums, memo, true, 0), rob(nums, memo, false, 1));
+
+		// result with 1st element included and last is not included
+		Map<Integer, Integer> memo1 = new HashMap<Integer, Integer>();
+		int result1 = Math.max(rob(nums, memo1, nums.length - 1, 0), rob(nums, memo1, nums.length, 1));
+
+		//result with 1st element is not included and last is included
+		Map<Integer, Integer> memo2 = new HashMap<Integer, Integer>();
+		int result2 = Math.max(rob(nums, memo2, nums.length, 2), rob(nums, memo2, nums.length, 1));
+		
+		return Math.max(result1, result2);
 	}
 
-	private static int rob(int[] nums, Map<Integer, Integer> memo, boolean startOfBeginning, int index) {
-		if (index >= nums.length) {
-			return 0;
-		}
-		// detect the condition where it is the end of the array and start from beginning 
-		// (adjacent house in begin and end)
-		if ((index == nums.length - 1) && startOfBeginning) {
+	private static int rob(int[] nums, Map<Integer, Integer> memo, int length, int index) {
+		if (index >= length) {
 			return 0;
 		}
 		if (memo.containsKey(index)) {
 			return memo.get(index);
 		}
-		int result = Math.max(rob(nums, memo, startOfBeginning, index + 2), rob(nums, memo, startOfBeginning, index + 3)) + nums[index];
+		int result = Math.max(rob(nums, memo, length, index + 2), rob(nums, memo, length, index + 3)) + nums[index];
 		memo.put(index, result);
 		return result;
 	}
