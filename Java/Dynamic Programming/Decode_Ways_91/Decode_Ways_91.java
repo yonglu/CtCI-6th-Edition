@@ -2,8 +2,6 @@ package Decode_Ways_91;
 
 import java.util.*;
 
-import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
-
 /*
  * Leetcode # 91. Decode Ways
  * 
@@ -127,5 +125,7 @@ public class Decode_Ways_91 {
 		result = numDecodings(new String("101"));		
 		System.out.println("numDecodings \"101\" : " + result);	// expect 1
 		
+		result = numDecodings(new String("101203"));		
+		System.out.println("numDecodings \"101203\" : " + result);	// expect 1
 	}
 }
