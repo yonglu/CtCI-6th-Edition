@@ -34,40 +34,81 @@ Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (m
 public class House_Robber_198 {
 
 
-	public static int rob(int[] nums) {
+	public static int robBacktracking(int[] nums) {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		} else if (nums.length == 1) {
 			return nums[0];
 		}
 		Map<Integer, Integer> memo = new HashMap<Integer, Integer>();
-		return Math.max(rob(nums, memo, 0), rob(nums, memo, 1));
+		return Math.max(robBacktracking(nums, memo, 0), robBacktracking(nums, memo, 1));
 	}
 
-	private static int rob(int[] nums, Map<Integer, Integer> memo, int index) {
+	private static int robBacktracking(int[] nums, Map<Integer, Integer> memo, int index) {
 		if (index >= nums.length) {
 			return 0;
 		}
 		if (memo.containsKey(index)) {
 			return memo.get(index);
 		}
-		int result = Math.max(rob(nums, memo, index + 2), rob(nums, memo, index + 3)) + nums[index];
+		int result = Math.max(robBacktracking(nums, memo, index + 2), robBacktracking(nums, memo, index + 3)) + nums[index];
 		memo.put(index, result);
 		return result;
 	}
 
+	public static int robRecursive(int[] nums, int index) {
+		if (nums == null || nums.length == 0) {
+			return 0;
+		} 
+		if (index < 0) {
+			return 0;
+		}
+
+		return Math.max( robRecursive(nums, index - 2), robRecursive(nums, index - 3)) + nums[index] ;
+	}
+
+	public static int robIterative(int[] nums) {
+		if (nums == null || nums.length == 0) {
+			return 0;
+		} 
+		
+        int currHouse = 0, oneHouseAgo = 0, twoHousesAgo = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            currHouse = Math.max(twoHousesAgo + nums[i], oneHouseAgo);
+            twoHousesAgo = oneHouseAgo;
+            oneHouseAgo = currHouse;
+        }
+
+        return currHouse;
+	}
+	
+	
 	public static void main(String[] args) {
 		
-		int result = rob(new int[] { 1,2,3,1 });		
-		System.out.println("Rob [1,2,3,1] : " + result);
+		int result = robBacktracking(new int[] { 1,2,3,1 });		
+		System.out.println("Rob Backtracking [1,2,3,1] : " + result);
 		
-		result = rob(new int[] { 2,7,9,3,1 });		
-		System.out.println("Rob [2,7,9,3,1] : " + result);
+		result = robBacktracking(new int[] { 2,7,9,3,1 });		
+		System.out.println("Rob Backtracking [2,7,9,3,1] : " + result);
 
-		result = rob(new int[] { 2,7,3,9,1 });		
-		System.out.println("Rob [2,7,3,9,1] : " + result);		
+		result = robBacktracking(new int[] { 2,7,3,9,1 });		
+		System.out.println("Rob Backtracking [2,7,3,9,1] : " + result);		
 		
-		result = rob(new int[] { 2,7,3,1,9 });		
-		System.out.println("Rob [2,7,3,1,9] : " + result);		
+		result = robBacktracking(new int[] { 2,7,3,1,9 });		
+		System.out.println("Rob Backtracking [2,7,3,1,9] : " + result);		
+
+		result = robRecursive(new int[] { 2,7,9,3,1 }, 4);		
+		System.out.println("Rob Recrusive [2,7,9,3,1] : " + result);
+
+		result = robRecursive(new int[] { 2,7,3,1,9 }, 4);		
+		System.out.println("Rob Recursive [2,7,3,1,9] : " + result);		
+
+		result = robIterative(new int[] { 2,7,9,3,1 });		
+		System.out.println("Rob Iterative [2,7,9,3,1] : " + result);
+
+		result = robIterative(new int[] { 2,7,3,1,9 });		
+		System.out.println("Rob Iterative [2,7,3,1,9] : " + result);		
+
 	}
 }
