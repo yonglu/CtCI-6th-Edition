@@ -31,8 +31,8 @@ You may assume that you have an infinite number of each kind of coin.
 /*
  * Note, if ask minimum, it is kind of messy to do the backtracking.  Mistakes made:
  * 		* set return from coinChange to 0 if no solution, should return 
- * 				MAX_VALUE to make it easier to process (line 67)
- * 		* add one before checking if the value is MAX_VALUE. (line 78)
+ * 				MAX_VALUE to make it easier to process (line 60)
+ * 		* add one before checking if the value is MAX_VALUE. (line 77)
  * 
  */
 public class Coin_Change_322 {
@@ -46,46 +46,43 @@ public class Coin_Change_322 {
         }
 		Map<Integer, Integer> memo = new HashMap<Integer, Integer>();
 		
-		int minSteps = Integer.MAX_VALUE;
-		int numSteps = Integer.MAX_VALUE;
-		for (int i = 0; i < coins.length; i++ ) {
-			numSteps = coinChange(coins, memo, coins[i], amount);
-			if (numSteps < minSteps) {
-				minSteps = numSteps;
-			}
-		}
+		int minSteps = coinChange(coins, memo, amount);
+		
 		if (minSteps == Integer.MAX_VALUE) {
 			minSteps = -1;
 		}
 		return minSteps;
 	}
 
-	private static int coinChange(int[] coins, Map<Integer, Integer> memo, int coinValue, 
-			int amount) {
-		if (amount-coinValue < 0) {
+	private static int coinChange(int[] coins, Map<Integer, Integer> memo, int rem) {
+		if (rem < 0) {
 			// no solution
 			return Integer.MAX_VALUE;
-		} else if (amount-coinValue == 0) {
-			return 1;
+		} else if (rem == 0) {
+			return 0;
 		}
+		
+		if (memo.containsKey(rem)) {
+			return memo.get(rem);
+		}
+		
 		// Remember not initialize it to -1 or 0
 		int minSteps = Integer.MAX_VALUE;
 		int numSteps = Integer.MAX_VALUE;
-		if (memo.containsKey(amount-coinValue)) {
-			minSteps = memo.get(amount-coinValue);
-		} else {
-			for (int i = 0; i < coins.length; i++ ) {
-				numSteps = coinChange(coins, memo, coins[i], amount - coinValue);
-				// Remember not to increase numSteps if no solution
-				if (numSteps != Integer.MAX_VALUE) {
-					numSteps++;
-					if (numSteps < minSteps) {
-						minSteps = numSteps;
-					}
+		
+		for (int coin : coins) {
+			numSteps = coinChange(coins, memo, rem - coin);
+			// Remember not to increase numSteps if no solution
+			if (numSteps != Integer.MAX_VALUE) {
+				numSteps++;
+				if (numSteps < minSteps) {
+					minSteps = numSteps;
 				}
-			}
-			memo.put(amount-coinValue, minSteps);
+			}			
 		}
+		
+		memo.put(rem, minSteps);
+		
 		return minSteps;
 	}
 	
@@ -97,30 +94,29 @@ public class Coin_Change_322 {
 		Map<Integer, Integer> memo = new HashMap<Integer, Integer>();
 		
 		int result = 0;
-		for (int i = 0; i < coins.length; i++ ) {
-			result += coinChangeNumberOfWays(coins, memo, coins[i], amount);
-		}
+		result = coinChangeNumberOfWays(coins, memo, amount);
 		if (result == 0) {
 			result = -1;
 		}
 		return result;
 	}
 	
-	private static int coinChangeNumberOfWays(int[] coins, Map<Integer, Integer> memo, int coinValue, int amount) {
-		if (amount-coinValue < 0) {
+	private static int coinChangeNumberOfWays(int[] coins, Map<Integer, Integer> memo, int rem) {
+		if (rem < 0) {
 			return 0;
-		} else if (amount-coinValue == 0) {
+		} else if (rem == 0) {
 			return 1;
 		}
 		int result = 0;
-		if (memo.containsKey(amount-coinValue)) {
-			result = memo.get(amount-coinValue);
-		} else {
-			for (int i = 0; i < coins.length; i++ ) {
-				result += coinChangeNumberOfWays(coins, memo, coins[i], amount - coinValue);
-			}
-			memo.put(amount-coinValue, result);
+		if (memo.containsKey(rem)) {
+			return memo.get(rem);
 		}
+			
+		for (int coin : coins) {
+			result += coinChangeNumberOfWays(coins, memo, rem - coin);
+		}
+		memo.put(rem, result);
+		
 		return result;
 	}
 
