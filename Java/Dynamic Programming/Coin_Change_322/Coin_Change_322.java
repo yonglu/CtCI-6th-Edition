@@ -29,10 +29,10 @@ You may assume that you have an infinite number of each kind of coin.
 
 
 /*
- * Note, if ask minimum, it is kind of messy to do the backtracking
- * 		* set return from coinChange to 0 if we are behind the value, should return 
- * 				MAX_VALUE to make it easier to process (line 66)
- * 		* add one before checking if the value is MAX_VALUE. (line 77)
+ * Note, if ask minimum, it is kind of messy to do the backtracking.  Mistakes made:
+ * 		* set return from coinChange to 0 if no solution, should return 
+ * 				MAX_VALUE to make it easier to process (line 67)
+ * 		* add one before checking if the value is MAX_VALUE. (line 78)
  * 
  */
 public class Coin_Change_322 {
@@ -63,10 +63,12 @@ public class Coin_Change_322 {
 	private static int coinChange(int[] coins, Map<Integer, Integer> memo, int coinValue, 
 			int amount) {
 		if (amount-coinValue < 0) {
+			// no solution
 			return Integer.MAX_VALUE;
 		} else if (amount-coinValue == 0) {
 			return 1;
 		}
+		// Remember not initialize it to -1 or 0
 		int minSteps = Integer.MAX_VALUE;
 		int numSteps = Integer.MAX_VALUE;
 		if (memo.containsKey(amount-coinValue)) {
@@ -74,6 +76,7 @@ public class Coin_Change_322 {
 		} else {
 			for (int i = 0; i < coins.length; i++ ) {
 				numSteps = coinChange(coins, memo, coins[i], amount - coinValue);
+				// Remember not to increase numSteps if no solution
 				if (numSteps != Integer.MAX_VALUE) {
 					numSteps++;
 					if (numSteps < minSteps) {
