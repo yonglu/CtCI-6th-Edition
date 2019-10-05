@@ -29,10 +29,17 @@ You may assume that you have an infinite number of each kind of coin.
 
 
 /*
- * Note, if ask minimum, it is kind of messy to do the backtracking.  Mistakes made:
+ * Note, if ask minimum steps for path, it is kind of messy to do the backtracking.  
+ * Mistakes made:
  * 		* set return from coinChange to 0 if no solution, should return 
  * 				MAX_VALUE to make it easier to process (line 60)
  * 		* add one before checking if the value is MAX_VALUE. (line 77)
+ * 
+ * It is even harder to get the path order(e.g. 1->5->5 for 11) with memorization.
+ * Need to remember the path from the backward not from beginning.  
+ * 
+ * During interview, just implement the backtracking algorithm without memorization first,
+ * then mention that you can memorization to decrease the big O from O(2^N) to O(N^2).
  * 
  */
 public class Coin_Change_322 {
@@ -120,7 +127,58 @@ public class Coin_Change_322 {
 		return result;
 	}
 
+	public static int coinChangePathWithoutMemory(int[] coins, int amount) {
+		if (coins == null || coins.length == 0 || amount < 0) {
+			return -1;
+		} 		
+        if (amount == 0) {
+            return 0;
+        }
+		
+		List<Integer> tempList = new ArrayList<Integer>();
+		
+		List<Integer> resultList = coinChangePathWithoutMemory(coins, amount, tempList);
+		
+		if (resultList.isEmpty()) {
+			return -1;
+		}
+		for (int i : resultList) {
+			System.out.print(i + ", ");
+		}
+		System.out.println();
+		return resultList.size();
+	}
 
+	private static List<Integer> coinChangePathWithoutMemory(int[] coins, int rem,
+			 List<Integer> tempList) {
+		if (rem < 0) {
+			// no solution
+			return new ArrayList<Integer>();
+		} else if (rem == 0) {
+			return new ArrayList<Integer>(tempList);
+		}
+		
+		List<Integer> minList = new ArrayList<Integer>();
+
+		for (int coin : coins) {
+			tempList.add(coin);
+			List<Integer> numList = coinChangePathWithoutMemory(coins, rem - coin, tempList);
+			// Remember to check if no solution or minList is empty
+			if (!numList.isEmpty()) {
+				if (minList.isEmpty()) {
+					minList.addAll(numList);
+				} else if (numList.size() < minList.size()) {
+					minList.clear();
+					minList.addAll(numList);
+				}
+			}	
+			tempList.remove(tempList.size()-1);			
+		}
+
+		return minList;
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		
@@ -141,5 +199,11 @@ public class Coin_Change_322 {
 		
 		result = coinChange(new int[] { 2 }, 3);		
 		System.out.println("coinChange [2], 3 : " + result);
+		
+		result = coinChangePathWithoutMemory(new int[] { 1, 2, 3 }, 6);		
+		System.out.println("coinChangePathWithouMemory [1,2, 3], 6 : " + result);
+		
+		result = coinChangePathWithoutMemory(new int[] { 1, 2, 5 }, 11);		
+		System.out.println("coinChangePathWithoutMemory [1,2, 5], 11 : " + result);
 	}
 }
