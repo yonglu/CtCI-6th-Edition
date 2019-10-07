@@ -27,6 +27,11 @@ Output: 3
 Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
 */
 
+/*
+ * During interview, just implement the backtracking algorithm without memorization first,
+ * then mention that you can memorization to decrease the big O from O(2^N) to O(N^2).
+ */
+
 public class Decode_Ways_91 {
 
 
