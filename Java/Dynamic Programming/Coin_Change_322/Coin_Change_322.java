@@ -93,39 +93,7 @@ public class Coin_Change_322 {
 		return minSteps;
 	}
 	
-	
-	public static int coinChangeNumberOfWays(int[] coins, int amount) {
-		if (coins == null || coins.length == 0 || amount < 0) {
-			return -1;
-		} 		
-		Map<Integer, Integer> memo = new HashMap<Integer, Integer>();
-		
-		int result = 0;
-		result = coinChangeNumberOfWays(coins, memo, amount);
-		if (result == 0) {
-			result = -1;
-		}
-		return result;
-	}
-	
-	private static int coinChangeNumberOfWays(int[] coins, Map<Integer, Integer> memo, int rem) {
-		if (rem < 0) {
-			return 0;
-		} else if (rem == 0) {
-			return 1;
-		}
-		int result = 0;
-		if (memo.containsKey(rem)) {
-			return memo.get(rem);
-		}
-			
-		for (int coin : coins) {
-			result += coinChangeNumberOfWays(coins, memo, rem - coin);
-		}
-		memo.put(rem, result);
-		
-		return result;
-	}
+    // coin change number of ways, see problem leetcode # 518.	
 
 	public static int coinChangePathWithoutMemory(int[] coins, int amount) {
 		if (coins == null || coins.length == 0 || amount < 0) {
@@ -181,16 +149,8 @@ public class Coin_Change_322 {
 	
 	
 	public static void main(String[] args) {
+		int result = 0;
 		
-		int result = coinChangeNumberOfWays(new int[] { 1, 2, 3 }, 4);		
-		System.out.println("coinChange number of ways [1,2,3], 4 : " + result);
-
-		result = coinChangeNumberOfWays(new int[] { 1, 2, 5 }, 11);		
-		System.out.println("coinChange number of ways [1,2,5], 11 : " + result);
-		
-		result = coinChangeNumberOfWays(new int[] { 2 }, 3);		
-		System.out.println("coinChange number of ways [2], 3 : " + result);
-
 		result = coinChange(new int[] { 1, 2, 3 }, 4);		
 		System.out.println("coinChange [1,2, 3], 4 : " + result);
 
