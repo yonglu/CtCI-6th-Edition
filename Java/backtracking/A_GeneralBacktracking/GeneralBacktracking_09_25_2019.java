@@ -21,13 +21,15 @@ import java.util.*;
  *    			Sort the given array beforehand and skip over duplicates while backtracking
  *
  *			The item from input can be chosen unlimited time - 
- *				use i instead of i as multiple using is permitted
+ *				use i instead of i + 1 as multiple using is permitted
  *
  *			If only one solution is needed, then use the boolean return in the 
  *				recursive calls to short circuit it.
  *
- *			For permutation, since you need every number/character, you start the 
- *				for loop with 0 and skip the number/char that is in the current solution.
+ * 		    Order matter and at least once - for loop starts from 0 instead of "start", 
+ * 				no need "start" parameter.  For permutation, since order matter and
+ * 				you need every number/character, you start the for loop with 0 and skip 
+ * 				the number/char that is in the current solution.
  *
  *			For N-queens - loop through the columns and backtracking on rows 
  *				(it would work if loop through rows and backtracking on columns).  
@@ -40,11 +42,39 @@ import java.util.*;
  *  a solution.  (Here is a pretty good explainiation of the concept: 
  *  http://exceptional-code.blogspot.com/2012/09/generating-all-permutations.html)
  *  
- *  In the Subsets and Combinations cases, the DFS branches are just the rest of 
+ *  In the Subsets and Combinations cases, order doesn't matter, the DFS branches are just the rest of 
  *  characters/numbers in the array. 
  *  
- *  For the permutation case, the DFS branches are every characters/numbers that 
+ *  For the permutation case, order matter, the DFS branches are every characters/numbers that 
  *  have not been visited. 
+ *  
+ *  Decision tree:
+ *  
+ *  	1.  if order doesn't matter, 
+ *              "for loop starts from "start". need "start" parameter
+ *              	"for (int i = start; i < nums.length; i++) {"
+ *              No need to do memorization because "i=start" is doing the 
+ *              	pruning on the tree already.
+ *  		else 
+ *              "for loop starts from 0 instead of "start", no need "start" parameter."
+ *              	"for (int i = 0; i < nums.length; i++) {"
+ *              		OR
+ *              	"for (int i : nums) {"
+ *              Need memorization if it is not asking for the whole combinations.
+ *              For example, # of ways, minimum number of inputs, etc...  I guess 
+ *              can still do memorization if asking the whole combinations, but not easy.
+ *              
+ *      2.  if item from input can be chosen only once 
+ *      		use i + 1 during recursive calls
+ *          else
+ *          	use i instead of i + 1 as multiple using is permitted
+ *      3.  if input contains duplicate items 
+ *    			a. Sort the given array beforehand 
+ *              		Arrays.sort(nums);
+ *              b. skip over duplicates while backtracking
+ *                     	if (i > start && nums[i] == nums[i-1]) {
+ *              			continue;
+ *          			}
  *  
  */
 public class GeneralBacktracking_09_25_2019 {
@@ -73,7 +103,7 @@ public class GeneralBacktracking_09_25_2019 {
 		for (int i = start; i < nums.length; i++) {
 			tempList.add(nums[i]);
 			// index @i is important, use i+1 instead of i as multiple using is not permitted
-			subsetsWithDup(lists, tempList, nums, i + 1);
+			subsets(lists, tempList, nums, i + 1);
 			tempList.remove(tempList.size() - 1);
 		}
 		return;
@@ -324,9 +354,10 @@ public class GeneralBacktracking_09_25_2019 {
      * ]
      * 
      * The permutation is similar as the last power set, the difference is we use 
-	 * each element at least and only one time, and we don't care about the order. 
+	 * each element at least and only one time, and order matter. 
 	 * 
-	 * 		1. at least one time - for loop starts from 0
+	 * 		1. Order matter and at least once - for loop starts from 0 instead of "start", 
+	 * 				no need "start" parameter.
 	 * 		2. only one time - check if element already visited
 	 * 
 	 */
@@ -351,6 +382,28 @@ public class GeneralBacktracking_09_25_2019 {
 		}
 	}
 	
+	public static List<List<Integer>> permute2(int[] nums) {
+		List<List<Integer>> list = new ArrayList<>();
+		// Arrays.sort(nums); // not necessary
+		permute2(list, new ArrayList<Integer>(), nums);
+		return list;
+	}
+
+	private static void permute2(List<List<Integer>> list, List<Integer> tempList, int[] nums) {
+		if (tempList.size() == nums.length) {
+			list.add(new ArrayList<Integer>(tempList));
+		}
+
+		for (int i : nums) {
+			if (tempList.contains(i))
+				continue; // element already exists, skip
+			tempList.add(i);
+			permute2(list, tempList, nums);
+			tempList.remove(tempList.size() - 1);
+		}
+	}
+	
+	
 	/*
 	 * Leetcode # 47
 	 * https://leetcode.com/problems/permutations-ii/
@@ -370,9 +423,10 @@ public class GeneralBacktracking_09_25_2019 {
      * This is similar to the permutation one except it may contain duplicates. 
      * 
      * 		1. sort the number array
-	 * 		2. at least one time - for loop starts from 0
-	 * 		3. only one time - check if element already visited
-	 * 		4. have duplicate - skip the duplicate that has been visited
+	 * 		2. have duplicate - skip the duplicate that has been visited
+	 * 		3. Order matter and at least once - for loop starts from 0 instead of "start", 
+	 * 				no need "start" parameter.
+	 * 		4. only one time - check if element already visited
 	 * 
 	 */
 	public static List<List<Integer>> permuteUnique(int[] nums) {
@@ -400,6 +454,116 @@ public class GeneralBacktracking_09_25_2019 {
 		}
 	}
 	
+	/*
+	 * Leetcode # 518. Coin Change 2
+	 * 
+	 * https://leetcode.com/problems/coin-change-2/
+	 * 
+	You are given coins of different denominations and a total amount of money. 
+	Write a function to compute the number of combinations that make up that amount. 
+	You may assume that you have infinite number of each kind of coin. 
+
+	Example 1:
+
+	Input: amount = 5, coins = [1, 2, 5]
+	Output: 4
+	Explanation: there are four ways to make up the amount:
+	5=5
+	5=2+2+1
+	5=2+1+1+1
+	5=1+1+1+1+1
+	Example 2:
+
+	Input: amount = 3, coins = [2]
+	Output: 0
+	Explanation: the amount of 3 cannot be made up just with coins of 2.
+	Example 3:
+
+	Input: amount = 10, coins = [10] 
+	Output: 1
+	 
+
+	Note:
+
+	You can assume that
+
+	0 <= amount <= 5000
+	1 <= coin <= 5000
+	the number of coins is less than 500
+	the answer is guaranteed to fit into signed 32-bit integer
+	*/
+	
+	/*
+	 * Decision Tree:
+	 * 		1. order doesn't matter
+	 * 		2. item from input can be used multiple times
+	 * 		3. No need to filter duplicated
+	 */
+	public static int coinChangeNumberOfWaysBackTrackingOrderDoesntMatter(int[] coins, int amount) {
+		if (coins == null || coins.length == 0 || amount < 0) {
+			return 0;
+		} 		
+		
+		List<List<Integer>> lists = new ArrayList<>();
+		coinChangeNumberOfWaysBackTrackingOrderDoesntMatter(coins, lists, new ArrayList<Integer>(), amount, 0);
+	
+		return lists.size();
+		
+	}
+	
+	private static void coinChangeNumberOfWaysBackTrackingOrderDoesntMatter(int[] coins, 
+			List<List<Integer>> lists, ArrayList<Integer> tempList, int amount, int start) {
+		if (amount < 0) {
+			return;
+		} else if (amount == 0) {
+			System.out.println(tempList);
+			lists.add(tempList);
+			return;
+		}
+		
+		for (int i=start; i<coins.length; i++) {
+			tempList.add(coins[i]);
+			System.out.print(coins[i] + ", ");
+			coinChangeNumberOfWaysBackTrackingOrderDoesntMatter(coins, lists, tempList, amount-coins[i], i);
+			tempList.remove(tempList.size()-1);
+		}
+	}
+	
+	/*
+	 * Decision Tree:
+	 * 		1. order matter
+	 * 		2. item from input can be used multiple times
+	 * 		3. No need to filter duplicated
+	 */
+	public static int coinChangeNumberOfWaysBackTrackingOrderMatter(int[] coins, int amount) {
+		if (coins == null || coins.length == 0 || amount < 0) {
+			return 0;
+		} 		
+		
+		List<List<Integer>> lists = new ArrayList<>();
+		coinChangeNumberOfWaysBackTrackingOrderMatter(coins, lists, new ArrayList<Integer>(), amount);
+	
+		return lists.size();
+		
+	}
+	
+	private static void coinChangeNumberOfWaysBackTrackingOrderMatter(int[] coins, 
+			List<List<Integer>> lists, ArrayList<Integer> tempList, int amount) {
+		if (amount < 0) {
+			return;
+		} else if (amount == 0) {
+			System.out.println(tempList);
+			lists.add(tempList);
+			return;
+		}
+		
+		for (int i=0; i<coins.length; i++) {
+			tempList.add(coins[i]);
+			System.out.print(coins[i] + ", ");
+			coinChangeNumberOfWaysBackTrackingOrderMatter(coins, lists, tempList, amount-coins[i]);
+			tempList.remove(tempList.size()-1);
+		}
+	}
 
 	public static void main(String[] args) {
 		int[] set = new int[] { 2, 3, 5, 6, 7 };
@@ -449,12 +613,23 @@ public class GeneralBacktracking_09_25_2019 {
 			System.out.println(subset.toString());
 		}
 
+		List<List<Integer>> results55 = permute2(new int[] { 1, 2, 3 });
+		System.out.println("Permute2:");
+		for (List<Integer> subset : results55) {
+			System.out.println(subset.toString());
+		}
+
 		List<List<Integer>> results7 = permuteUnique(new int[] { 1, 2, 1});
 		System.out.println("PermuteUnique:");
 		for (List<Integer> subset : results7) {
 			System.out.println(subset.toString());
 		}
+		
+		int result8 = coinChangeNumberOfWaysBackTrackingOrderDoesntMatter(new int[] { 1, 2, 3 }, 4);		
+		System.out.println("coinChange number of ways backtracking order doesn't matter [1,2,3], 4 : " + result8);
 	
+		int result9 = coinChangeNumberOfWaysBackTrackingOrderMatter(new int[] { 1, 2, 3 }, 4);		
+		System.out.println("coinChange number of ways backtracking order matter [1,2,3], 4 : " + result9);
 	}
 
 }
