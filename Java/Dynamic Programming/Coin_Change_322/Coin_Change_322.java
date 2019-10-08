@@ -35,6 +35,12 @@ You may assume that you have an infinite number of each kind of coin.
  * 				MAX_VALUE to make it easier to process (line 64)
  * 		* add one before checking if the value is MAX_VALUE. (line 776)
  */
+
+/*
+ * Not sure why the coinChange implementation is over the time limit when submit, but
+ * coinChange2 is success.  Trying to add memorizatioon to coinChange, get incorrect
+ * answer.
+ */
 public class Coin_Change_322 {
 
 	/*
@@ -68,9 +74,9 @@ public class Coin_Change_322 {
 			return 0;
 		}
 		
-		if (memo.containsKey(rem)) {
-			return memo.get(rem);
-		}
+//		if (memo.containsKey(rem)) {
+//			return memo.get(rem);
+//		}
 		
 		// Remember not initialize it to -1 or 0
 		int minSteps = Integer.MAX_VALUE;
@@ -86,7 +92,9 @@ public class Coin_Change_322 {
 				}
 			}			
 		}
-		memo.put(rem, minSteps);
+		if (minSteps != Integer.MAX_VALUE) {
+			memo.put(rem, minSteps);
+		}
 		
 		return minSteps;
 	}
@@ -156,7 +164,7 @@ public class Coin_Change_322 {
 		System.out.println("coinChange [2], 3 : " + result);
 		
 		result = coinChange(new int[] { 357,239,73,52 }, 9832);		
-		System.out.println("coinChange [357,239,73,52], 9832 : " + result);
+		System.out.println("coinChange [357,239,73,52], 9832 (expected 35): " + result);
 		
 		result = coinChange2(new int[] { 1, 2, 3 }, 4);		
 		System.out.println("coinChange2 [1,2, 3], 4 : " + result);
