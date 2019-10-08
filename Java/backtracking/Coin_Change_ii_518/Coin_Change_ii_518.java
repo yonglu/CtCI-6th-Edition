@@ -58,6 +58,9 @@ public class Coin_Change_ii_518 {
 	 * 		3. No need to filter duplicated
 	 */
 	public static int coinChangeNumberOfWaysBackTrackingOrderDoesntMatter(int[] coins, int amount) {
+        if (coins.length==0 && amount==0) {
+            return 1;
+        }
 		if (coins == null || coins.length == 0 || amount < 0) {
 			return 0;
 		} 		
@@ -196,6 +199,13 @@ public class Coin_Change_ii_518 {
      */
     public static int count=0;
     public static int coinChangeNumberOfWaysBackTrackingOrderDoesntMatterSimplified(int[] coins, int amount) {
+        if (coins.length==0 && amount==0) {
+            return 1;
+        }
+		if (coins == null || coins.length == 0 || amount < 0) {
+			return 0;
+		} 		
+		
         helper(amount, coins, 0, 0);
         return count;
     }
