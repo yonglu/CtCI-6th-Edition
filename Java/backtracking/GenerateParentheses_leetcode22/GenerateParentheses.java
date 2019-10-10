@@ -47,7 +47,7 @@ public class GenerateParentheses {
 			tempResult.deleteCharAt(tempResult.length()-1);
 		}
 		
-		if (rpCount < n) {
+		if (rpCount < lpCount) {
 			tempResult.append(')');
 			generateParenthesisDFS(lists, tempResult, lpCount, rpCount+1, n);
 			tempResult.deleteCharAt(tempResult.length()-1);
@@ -84,6 +84,7 @@ public class GenerateParentheses {
 			return;
 		}
 		
+		// Order doesn't matter
 		for (int i = 0; i < input.length; i++) {
 			// Short circuit if we are going to have more right parenthesis
 			if (!checkIfCanAdd(tempResult, input[i])) {
