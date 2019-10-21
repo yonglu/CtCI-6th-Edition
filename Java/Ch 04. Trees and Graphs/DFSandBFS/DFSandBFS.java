@@ -55,19 +55,20 @@ public class DFSandBFS {
 	    
 //	    System.out.println(root.name);
 //	    root.state = State.COMPLETE;
-		root.state = State.PARTIAL;
-	    for (Node node : root.children) {
-	        if (node != null && node.state == State.BLANK) {
-				if (!searchDFSWithReturnStack(node, returnStack)) {
-					return false;
-				}
-	        }
-	    }
-	    root.state = State.COMPLETE;
-	    // note, not easy to use queue because we have to add to queue after set state to partial 
-	    // but we also want to set the state to COMPLETE after done too.
-	    returnStack.add(root);
-	    
+		if (root.state == State.BLANK) {
+			root.state = State.PARTIAL;
+		    for (Node node : root.children) {
+		        if (node != null && node.state != State.COMPLETE) {
+					if (!searchDFSWithReturnStack(node, returnStack)) {
+						return false;
+					}
+		        }
+		    }
+		    root.state = State.COMPLETE;
+		    // note, not easy to use queue because we have to add to queue after set state to partial 
+		    // but we also want to set the state to COMPLETE after done too.
+		    returnStack.add(root);
+		}
 		return true;
 	 }
 	
@@ -75,7 +76,7 @@ public class DFSandBFS {
 	public static void searchBFSWithReturnQueue(Node root, Queue<Node> returnQ) {
 		if (root == null)
 			return;
-		Queue queue = new LinkedList();
+		Queue<Node> queue = new LinkedList<Node>();
 	    queue.add(root); // Add to the end of queue
 
 	    while (!queue.isEmpty()) {
