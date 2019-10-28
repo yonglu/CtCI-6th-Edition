@@ -84,7 +84,7 @@ public class GenerateParentheses {
 			return;
 		}
 		
-		// Order doesn't matter
+		// Order matter
 		for (int i = 0; i < input.length; i++) {
 			// Short circuit if we are going to have more right parenthesis
 			if (!checkIfCanAdd(tempResult, input[i])) {
