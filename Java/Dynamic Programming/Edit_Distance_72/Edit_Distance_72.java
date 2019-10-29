@@ -57,57 +57,42 @@ public class Edit_Distance_72 {
 */
 		}
 		
-//		return minDistance(word1, word2, 0, 0);
-		return minDistance2(word1, word2, word1.length(), word2.length());
-	}
-
-	private static int minDistance(String word1, String word2, int i, int j) {
-		if (i == word1.length() || j == word2.length() ) {
-			return i + j;
-		}
-		int minSteps = 0;
-		if (word1.charAt(i) == word2.charAt(j)) {
-			minSteps = minDistance(word1,  word2, i+1, j+1);
-		} else {
-			minSteps = 1 + min(
-				minDistance(word1, word2, i, j+1), 	// insert
-				minDistance(word1,  word2, i+1, j), // delete
-				minDistance(word1,  word2, i+1, j+1)// replacement
-			);
-		}
-		return minSteps;
+		Map<String, Integer> memo = new HashMap<String, Integer>();
+		return minDistance(word1, word2, word1.length(), word2.length(), memo);
 	}
 	
-	private static int minDistance2(String word1, String word2, int i, int j) {
+	// Note: Have tried to start from beginning instead of from end, it is kind
+	// of messy when it ends because the word's length changes.  Much cleaner to
+	// start from end.
+	private static int minDistance(String word1, String word2, int i, int j,
+			Map<String, Integer> memo) {
 		if (i == 0 || j == 0 ) {
 			return i + j;
 		}
 		int minSteps = 0;
+		
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(i).append("+").append(j);
+		if (memo.containsKey(sb.toString())) {
+			return memo.get(sb.toString());
+		}
 		if (word1.charAt(i-1) == word2.charAt(j-1)) {
-			minSteps = minDistance2(word1,  word2, i-1, j-1);
+			minSteps = minDistance(word1,  word2, i-1, j-1, memo);
 		} else {
 			minSteps = 1 + min(
-				minDistance2(word1, word2, i, j-1), 	// insert
-				minDistance2(word1,  word2, i-1, j), // delete
-				minDistance2(word1,  word2, i-1, j-1)// replacement
+				minDistance(word1, word2, i, j-1, memo), 	// insert
+				minDistance(word1,  word2, i-1, j, memo), // delete
+				minDistance(word1,  word2, i-1, j-1, memo)// replacement
 			);
 		}
+		memo.put(sb.toString(), minSteps);
 		return minSteps;
 	}
 
 
-	private static int min (int i, int j, int k) {
-		int ret = Integer.MAX_VALUE;
-		if (i < ret) {
-			ret = i;
-		}
-		if (j < ret) {
-			ret = j;
-		}
-		if (k < ret) {
-			ret = k;
-		}
-		return ret;
+	private static int min (int i, int j, int k) {		
+		return Math.min(i, Math.min(j,  k));
 	}
 	
 	public static void main(String[] args) {
