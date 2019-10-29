@@ -2,10 +2,6 @@ package Coin_Change_i_322_and_ii_518;
 
 import java.util.*;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
-import com.sun.org.glassfish.external.statistics.Statistic;
-
 /*
  * Leetcode # 322. Coin Change
  * 
