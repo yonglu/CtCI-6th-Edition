@@ -30,6 +30,10 @@ import java.util.*;
  * 				no need "start" parameter.  For permutation, since order matter and
  * 				you need every number/character, you start the for loop with 0 and skip 
  * 				the number/char that is in the current solution.
+ * 			
+ * 			if can have multiple digits, use Long.parseLong(num.substring(start, i + 1))
+ * 				instead of Long.parseLong(num.substring(start, start + 1)) or 
+ * 				num.charAt[start] - "0")
  *
  *			For N-queens - loop through the columns and backtracking on rows 
  *				(it would work if loop through rows and backtracking on columns).  
@@ -75,6 +79,12 @@ import java.util.*;
  *                     	if (i > start && nums[i] == nums[i-1]) {
  *              			continue;
  *          			}
+ *      4. if can have multiple digits, e.g. for "123", we can have "1, 2, 3", 
+ *      	"12, 3", "1, 23", or "123", instead of just "1, 2, 3"
+ *      		use long currentDigitsValue = Long.parseLong(num.substring(start, i + 1));
+ *         else
+ *          	use long currentDigitsValue = Long.parseLong(num.substring(start, start + 1)); or
+ *          		long currentDigitsValue = num.charAt[start] - "0");
  *  
  */
 public class GeneralBacktracking_09_25_2019 {
