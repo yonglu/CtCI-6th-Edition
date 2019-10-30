@@ -46,7 +46,7 @@ public class Expression_Add_Operators_282 {
 
 //  char ops[] = {'+', '-', '*'};
 
-  public static List<String> addOperators2(String num, int target) {
+  public static List<String> addOperators(String num, int target) {
 
       List<List<String>> lists = new ArrayList<>();
       List<String> result = new ArrayList<String>();
@@ -199,19 +199,19 @@ public class Expression_Add_Operators_282 {
 	
 	public static void main(String[] args) {
 
-		List<String> result = addOperators2("105", 5);
+		List<String> result = addOperators("105", 5);
 		System.out.println("addOperators 105, 5 : ");
 		for (String s : result) {
 			System.out.println("    " + s);
 		}
 
-		result = addOperators2("115", 6);
+		result = addOperators("115", 6);
 		System.out.println("addOperators 115, 6 : ");
 		for (String s : result) {
 			System.out.println("    " + s);
 		}
 		
-		result = addOperators2("232", 8);
+		result = addOperators("232", 8);
 		System.out.println("addOperators 232, 8 : ");
 		for (String s : result) {
 			System.out.println("    " + s);
