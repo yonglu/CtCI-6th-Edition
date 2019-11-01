@@ -81,10 +81,17 @@ import java.util.*;
  *          			}
  *      4. if can have multiple digits, e.g. for "123", we can have "1, 2, 3", 
  *      	"12, 3", "1, 23", or "123", instead of just "1, 2, 3"
- *      		use long currentDigitsValue = Long.parseLong(num.substring(start, i + 1));
- *         else
- *          	use long currentDigitsValue = Long.parseLong(num.substring(start, start + 1)); or
- *          		long currentDigitsValue = num.charAt[start] - "0");
+ *      	use 
+ *      		* long currentDigitsValue = Long.parseLong(num.substring(start, i + 1));
+ *    			* for (int i = start; i < s.length(); i++) {
+					if (isPalindrome(s, start, i)) {
+     	   else
+ *          use 
+ *          	* long currentDigitsValue = Long.parseLong(num.substring(start, start + 1)); or
+ *          	  long currentDigitsValue = num.charAt[start] - "0");
+ *          	* for (int i = start; i < s.length(); i++) {
+					// no checking the multiple items. 
+
  *  
  */
 public class GeneralBacktracking_09_25_2019 {
