@@ -2,11 +2,6 @@ package Max_Area_Of_Islands_695;
 
 import java.util.*;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
-import sun.security.krb5.internal.rcache.MemoryCache;
-import sun.security.x509.DeltaCRLIndicatorExtension;
-
 /*
  * Leetcode # 695. Max Area of Island
 
