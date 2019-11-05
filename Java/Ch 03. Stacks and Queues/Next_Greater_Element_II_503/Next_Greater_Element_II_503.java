@@ -61,16 +61,20 @@ public class Next_Greater_Element_II_503 {
         Arrays.fill(ret, -1);
         Stack<Pair> stack = new Stack<Pair>();
         
+        // loop 2 times for circular array
         for (int i = 0; i < 2 * nums.length; i++) {
+        	
         	int idx = i % nums.length;
         	
     		while (!stack.isEmpty() && stack.peek().getValue() < nums[idx]) {
     			Pair temp = stack.pop();
+    			// Don't overwrite the next greater element if it is found already.
     			if (ret[temp.getKey()] == -1) {
         			ret[temp.getKey()] = nums[idx];    				
     			} 
     		} 
     		
+    		// Don't push to stack if we have found the next greater element.
     		if (ret[idx] == -1) {
     			stack.push(new Pair(idx, nums[idx]));
     		}
@@ -84,8 +88,8 @@ public class Next_Greater_Element_II_503 {
 		int[] result = nextGreaterElementII(new int[] { 1, 2, 1 });		
 		System.out.println("Next Greater Element II : " + Arrays.toString(result));
 
-//		result = nextGreaterElementII(new int[] { 2, 4 });		
-//		System.out.println("Next Greater Element II : " + Arrays.toString(result));
+		result = nextGreaterElementII(new int[] { 2, 6, 4 });		
+		System.out.println("Next Greater Element II : " + Arrays.toString(result));
 
 	}
 }
