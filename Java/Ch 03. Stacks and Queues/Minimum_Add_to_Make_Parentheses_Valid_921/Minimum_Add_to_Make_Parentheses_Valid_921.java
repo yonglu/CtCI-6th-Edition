@@ -68,6 +68,32 @@ public class Minimum_Add_to_Make_Parentheses_Valid_921 {
         return stack.size();
     }
 
+    public static int minAddToMakeValidWithBalanceCount(String S) {
+       if (S == null || S.length() == 0) {
+    	   return 0;
+       }
+       
+       int ans = 0;
+       int balance = 0;
+       
+       for (int i = 0; i < S.length(); i++) {
+       	char c = S.charAt(i);
+       	if (c == '(') {
+       		balance++;
+       	} else {
+       		balance--;
+       		if (balance == -1) {
+       			ans++;
+       			balance = 0;
+       		}
+       	}
+       }    
+       
+       ans += balance;
+       
+       return ans;
+   }
+    
 	
     public static int minAddToMakeValid(String S) {
         int result = 0;
@@ -121,6 +147,18 @@ public class Minimum_Add_to_Make_Parentheses_Valid_921 {
 		result = minAddToMakeValid("()))((");
 		System.out.println(result);
 		
+		result = minAddToMakeValidWithBalanceCount("())");
+		System.out.println(result);
+
+		result = minAddToMakeValidWithBalanceCount("()");
+		System.out.println(result);
+		
+		result = minAddToMakeValidWithBalanceCount("(((");
+		System.out.println(result);
+		
+		result = minAddToMakeValidWithBalanceCount("()))((");
+		System.out.println(result);
+
 		result = minAddToMakeValidWithStack("())");
 		System.out.println(result);
 
