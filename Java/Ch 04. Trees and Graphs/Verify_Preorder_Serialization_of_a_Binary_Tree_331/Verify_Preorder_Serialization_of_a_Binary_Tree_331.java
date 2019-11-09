@@ -1,5 +1,9 @@
 package Verify_Preorder_Serialization_of_a_Binary_Tree_331;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 /*
@@ -59,8 +63,31 @@ public class Verify_Preorder_Serialization_of_a_Binary_Tree_331 {
 	 */
 	
 	public static boolean isValidSerialization(String preorder)  {
-		// to be implemented using array...
-		return false;
+		if ( preorder == null || preorder.length() == 0 ) {
+			return false;
+		}
+		
+		List<String> list = new ArrayList<String>();
+//		list.addAll(Arrays.asList(preorder.split(",")));
+		String[] nodes = preorder.split(",");
+		for (String node : nodes) {
+			list.add(node);
+		}
+		
+		//TODO This doesn't work
+		while (list.size() >= 3 && 
+			   list.get(list.size()-1).equals("#") &&
+			   list.get(list.size()-2).equals("#") &&
+			   !list.get(list.size()-3).equals("#")	 ) {
+			
+			list.remove(list.size()-1);
+			list.remove(list.size()-1);
+			list.remove(list.size()-1);
+			
+			list.add("#");
+		}
+				
+		return (list.size() == 1 && list.get(0) == "#") ? true : false;
 	}
 	
 	public static boolean isValidSerializationStack(String preorder)  {
@@ -92,6 +119,15 @@ public class Verify_Preorder_Serialization_of_a_Binary_Tree_331 {
 	public static void main(String[] args) {
 		boolean ans = false;
 		
+		ans = isValidSerialization("9,3,4,#,#,1,#,#,2,#,6,#,#");
+		System.out.println(ans);
+
+		ans = isValidSerialization("1,#");
+		System.out.println(ans);
+		
+		ans = isValidSerialization("9,#,#,1");
+		System.out.println(ans);
+
 		ans = isValidSerializationStack("9,3,4,#,#,1,#,#,2,#,6,#,#");
 		System.out.println(ans);
 
