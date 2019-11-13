@@ -58,6 +58,7 @@ public class Find_The_Duplicated_Number_287 {
     		return -1;
     	}
         // Find the intersection point of the two runners.
+        // This proofs that cycle exists
         int tortoise = nums[0];
         int hare = nums[0];
         do {
@@ -65,12 +66,8 @@ public class Find_The_Duplicated_Number_287 {
             hare = nums[nums[hare]];
         } while (tortoise != hare);
 
-        // Not sure why this doesn't work with [2,5,9,6,9,3,8,9,7,1] in submission
-        // but work with Eclipse.
-        //        return tortoise;
-       
-        // TODO why needs to find the entrance????
         // Find the "entrance" to the cycle.
+        // Thi would be the duplicate number.
         int ptr1 = nums[0];
         int ptr2 = tortoise;
         while (ptr1 != ptr2) {
