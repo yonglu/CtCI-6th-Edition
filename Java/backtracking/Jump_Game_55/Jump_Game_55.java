@@ -30,7 +30,26 @@ Explanation: You will always arrive at index 3 no matter what. Its maximum
 
 public class Jump_Game_55 {
 
-	// 74 / 75 test cases passed.  Status: Time Limit Exceeded
+	// Use greedy algorithm work
+    public static boolean canJumpGreedy(int[] nums) {
+        if ( nums == null ) {
+        	return false;
+        } else if ( nums.length == 0) {
+        	return true;
+        }
+
+        int lastPos = nums.length - 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            // Use greater than and equal to because it can always jump 1 step
+            if (i + nums[i] == lastPos) {
+                lastPos = i;
+            }
+        }
+        return lastPos == 0;
+    }
+    
+	// Backtracking with memorization.
+    // 74 / 75 test cases passed.  Status: Time Limit Exceeded
     public static boolean canJump(int[] nums) {
         if ( nums == null ) {
         	return false;
@@ -42,7 +61,7 @@ public class Jump_Game_55 {
     	
     	return canJump(nums, memo, 0);
     }
-    
+ 
     private static boolean canJump(int[] nums, Map<Integer, Boolean> memo, int startIndex) {
 
     	if ( startIndex == nums.length - 1 ) {
@@ -55,7 +74,14 @@ public class Jump_Game_55 {
     		return memo.get(startIndex);
     	}
     	
-    	for ( int i = 1; i <= nums[startIndex]; i++) {
+    	// Optimization:  
+    	// 		1. no sense to check pass the end.
+    	//		2. try the furthestJump first
+    	// Uses "for ( int i = 1; i <= nums[startIndex]; i++)" before. 
+    	// However, still time over the limit in last Leetcode test case.
+    	int furthestJump = Math.min(nums[startIndex], nums.length - 1 - startIndex);   	
+    	for ( int i = furthestJump; i >= 1; i--) {
+//    	for ( int i = 1; i <= nums[startIndex]; i++) {
     		if (canJump(nums, memo, startIndex + i)) {
     			memo.put(startIndex, true);
     			return true;
@@ -67,12 +93,19 @@ public class Jump_Game_55 {
     	return false;
     }
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		boolean ans;
 		ans = canJump(new int[] {2,3,1,1,4});
 		System.out.println("can jump [2,3,1,1,4] : " + ans);
 
 		ans = canJump(new int[] {3,2,1,0,4});
 		System.out.println("can jump [3,2,1,0,4] : " + ans);
-	}
+
+		ans = canJumpGreedy(new int[] {2,3,1,1,4});
+		System.out.println("can jump [2,3,1,1,4] : " + ans);
+
+		ans = canJumpGreedy(new int[] {3,2,1,0,4});
+		System.out.println("can jump [3,2,1,0,4] : " + ans);
+    
+    }
 }
