@@ -38,7 +38,7 @@ public class Task_Scheduler_621 {
     public static int leastInterval(char[] tasks, int n)  {
     	
     	if (tasks == null || tasks.length == 0) {
-    		return 0;
+    		return -1;
     	}
     	
     	// Create a sorted task list
