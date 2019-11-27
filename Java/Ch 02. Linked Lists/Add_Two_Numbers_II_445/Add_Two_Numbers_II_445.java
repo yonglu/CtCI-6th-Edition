@@ -2,8 +2,6 @@ package Add_Two_Numbers_II_445;
 
 import java.util.*;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 /* Leetcode 445. Add Two Numbers II
 
 You are given two non-empty linked lists representing two non-negative integers. 

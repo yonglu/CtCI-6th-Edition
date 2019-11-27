@@ -2,8 +2,6 @@ package LRU_Cache_146;
 
 import java.util.*;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 /* Leetcode 146. LRU Cache
 
 Design and implement a data structure for Least Recently Used (LRU) cache. 
