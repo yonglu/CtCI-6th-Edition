@@ -23,7 +23,34 @@ Output: "bb"
 public class Longest_Palindromic_Substring_5 {
 
     public static String longestPalindrome(String s)  {
-    	return "";
+    	
+    	String longestPal = "";
+    	if (s == null || s.length() == 0) {
+    		return longestPal;
+    	}
+    	
+    	
+    	for (int i = 0; i < s.length(); i++) {
+    		String tempPal = palindromeLength(s, i, i);
+    		if (tempPal.length() > longestPal.length()) {
+    			longestPal = tempPal;
+    		}
+    		
+    		tempPal = palindromeLength(s, i, i+1);
+    		if (tempPal.length() > longestPal.length()) {
+    			longestPal = tempPal;
+    		}
+    	}
+    	
+    	return longestPal;
+    }
+    
+    private static String palindromeLength(String s, int l, int r) {
+    	while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) {
+    		l--;
+    		r++;
+    	}
+    	return s.substring(l+1, r);
     }
     
 	public static void main(String[] args) {
@@ -33,5 +60,9 @@ public class Longest_Palindromic_Substring_5 {
 
 		ans = longestPalindrome("cbbd");		
 		System.out.println("Longest palindrome of cbbd is : " + ans);
+		
+		ans = longestPalindrome("abcdcba");		
+		System.out.println("Longest palindrome of abcdcba is : " + ans);
+		
 	}
 }

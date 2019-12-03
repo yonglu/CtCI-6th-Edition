@@ -20,6 +20,9 @@
 	<classpathentry kind="src" path="Java/backtracking"/>
 	<classpathentry kind="src" path="Java/Two Pointers"/>
 	<classpathentry kind="src" path="Java/Sliding Windows"/>
+	<classpathentry kind="src" path="Java/Dynamic Programming"/>
+	<classpathentry kind="src" path="Java/Greedy"/>
+	<classpathentry kind="src" path="Java/Misc"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
