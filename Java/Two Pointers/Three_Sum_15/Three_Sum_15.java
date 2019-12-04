@@ -2,8 +2,6 @@ package Three_Sum_15;
 
 import java.util.*;
 
-import sun.nio.cs.ext.ISCII91;
-
 /* Leetcode # 15. 3Sum
 
 Given an array nums of n integers, are there elements a, b, c in nums 
@@ -27,12 +25,63 @@ A solution set is:
 
 public class Three_Sum_15 {
 
+
+	// threeSumSortFirstTwoPointers is faster than threeSumSortFirstHashSet and threeSumNoSort
+	// Algorithm:
+	// 	1. sort the array ONlogN)  
+	//         (this make it easy to avoid the duplicate set of triplets answer, 
+	//          and can use two pointers technique when doing two sum in loop)
+	//	2. remember to break if first item is positive and skip the repeat number
+	//  3. use two pointers technique to find two sum.  Remember to start from right of
+	// 			current index
+	public static List<List<Integer>> threeSumSortFirstTwoPointers(int[] nums) {
+		List<List<Integer>> lists = new ArrayList<>();
+		
+		if (nums == null || nums.length < 3) {
+			return lists;
+		}
+		
+		Arrays.sort(nums);
+		
+		for (int i = 0; i < nums.length - 2; i++) {
+			// Since the nums is sorted, if the first one is positive, no way to make zero sum, we are done.
+			if (nums[i] > 0) break;  
+			
+			// If the number is repeat, skip it.
+			if(i > 0 && nums[i] == nums[i-1]) continue;
+			
+			int l = i + 1;			// left index pointer 
+			int r = nums.length - 1;	// right index pointer
+			
+			while (l  < r) {
+				if (nums[l] + nums[r] == -nums[i]) {
+	            	List<Integer> tempList = Arrays.asList(nums[i], nums[l], nums[r]);
+	            	if (!lists.contains(tempList)) {
+	            		lists.add(tempList);
+	            	}
+	            	while (l < r && nums[l+1] == nums[l]) l++;
+	            	while (l < r && nums[r-1] == nums[r]) r--;
+					l++;
+					r--;
+				} else if (nums[l] + nums[r] < -nums[i]) {
+					while (l < r && nums[l+1] == nums[l]) l++;
+					l++;
+				} else {
+					while (l < r && nums[r-1] == nums[r]) r--;
+					r--;					
+				}
+			}			
+		}
+		
+		return lists;
+	}
+	
 	/*
 	 * threeSumSortFirst is faster than threeSumNoSort, I guess due to that no need to 
 	 * sort and dedup the answers.
 	 */
 	
-	public static List<List<Integer>> threeSumSortFirst(int[] nums) {
+	public static List<List<Integer>> threeSumSortFirstHashSet(int[] nums) {
 		List<List<Integer>> lists = new ArrayList<>();
 		
 		if (nums == null || nums.length < 3) {
@@ -133,21 +182,31 @@ public class Three_Sum_15 {
 			System.out.println(list.toString());
 		}
 	
-	    results = threeSumNoSort(new int[] {-1, 0, 1, 2, -1, -4 });
-		
+	    results = threeSumNoSort(new int[] {-1, 0, 1, 2, -1, -4 });		
 		System.out.println("Three Sum of [-1, 0, 1, 2, -1, -4] with target 0 :");
 		for (List<Integer> list : results) {
 			System.out.println(list.toString());
 		}
 
-	    results = threeSumSortFirst(new int[] {-1, 0, 1, 2, -1, -4 });
-		
+	    results = threeSumSortFirstHashSet(new int[] {-1, 0, 1, 2, -1, -4 });		
 		System.out.println("Three Sum of [-1, 0, 1, 2, -1, -4] with target 0 :");
 		for (List<Integer> list : results) {
 			System.out.println(list.toString());
 		}
-	    results = threeSumSortFirst(new int[] {0, 0, 0, 0});
 		
+	    results = threeSumSortFirstHashSet(new int[] {0, 0, 0, 0});		
+		System.out.println("Three Sum of [0, 0, 0, 0] with target 0 :");
+		for (List<Integer> list : results) {
+			System.out.println(list.toString());
+		}
+
+	    results = threeSumSortFirstTwoPointers(new int[] {-1, 0, 1, 2, -1, -4 });		
+		System.out.println("Three Sum of [-1, 0, 1, 2, -1, -4] with target 0 :");
+		for (List<Integer> list : results) {
+			System.out.println(list.toString());
+		}
+		
+	    results = threeSumSortFirstTwoPointers(new int[] {0, 0, 0, 0});		
 		System.out.println("Three Sum of [0, 0, 0, 0] with target 0 :");
 		for (List<Integer> list : results) {
 			System.out.println(list.toString());
