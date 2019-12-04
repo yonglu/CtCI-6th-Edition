@@ -43,7 +43,7 @@ public class Three_Sum_15 {
 		
 		for (int i = 0; i < nums.length - 2; i++) {
 			if (nums[i] > 0) break;
-			if(i > 0 && nums[i] == nums[i-1]) continue; 
+//			if(i > 0 && nums[i] == nums[i-1]) continue; 
 			// Set the startingPoint for twoSum so doesn't waste 
 			// cycle to check from beginning
 			twoSumHashSetInlineSaveToList(lists, nums, i+1, nums.length - 1, -nums[i]);
@@ -140,9 +140,15 @@ public class Three_Sum_15 {
 			System.out.println(list.toString());
 		}
 
-	    results = threeSumSortFirst(new int[] {0, 0, 0, 0});
+	    results = threeSumSortFirst(new int[] {-1, 0, 1, 2, -1, -4 });
 		
 		System.out.println("Three Sum of [-1, 0, 1, 2, -1, -4] with target 0 :");
+		for (List<Integer> list : results) {
+			System.out.println(list.toString());
+		}
+	    results = threeSumSortFirst(new int[] {0, 0, 0, 0});
+		
+		System.out.println("Three Sum of [0, 0, 0, 0] with target 0 :");
 		for (List<Integer> list : results) {
 			System.out.println(list.toString());
 		}
