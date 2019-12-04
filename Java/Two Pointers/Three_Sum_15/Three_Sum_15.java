@@ -26,7 +26,10 @@ A solution set is:
 public class Three_Sum_15 {
 
 
-	// threeSumSortFirstTwoPointers is faster than threeSumSortFirstHashSet and threeSumNoSort
+	// if ask for 4 sum, just add another outer loop
+	
+	// threeSumSortFirstTwoPointers (O(n^2) time and O(n) space). is faster than threeSumSortFirstHashSet and 
+	// threeSumNoSort
 	// Algorithm:
 	// 	1. sort the array ONlogN)  
 	//         (this make it easy to avoid the duplicate set of triplets answer, 
