@@ -2,9 +2,6 @@ package Merge_K_Sorted_Lists_23;
 
 import java.util.*;
 
-import com.sun.glass.ui.Size;
-
-import sun.security.util.Length;
 
 /* Leetcode 23. Merge k Sorted Lists
 
@@ -38,7 +35,7 @@ Compare every k nodes (head of every linked list) and get the node with the
 smallest value.
 Extend the final sorted linked list with the selected nodes.
 
-Approach 3: Optimize Approach 2 by Priority Queue O(NlogK)
+Approach 3: Optimize Approach 2 by Priority Queue O(KlogN)
 Algorithm
 
 Almost the same as the one above but optimize the comparison process by priority queue. 
@@ -72,7 +69,45 @@ class ListNode {
 }
 
 public class Merge_K_Sorted_Lists_23 {
+	
+	// This is algorithm number 3 in above O(KlogN)
+	// This is slower than algorithm number 5 (merge with divide and conque) O(NlogK),
+	// but it is easier to implement in Java because we have PriorityQueue data structure.
+	public static ListNode mergeKListsPriorityQueue(ListNode[] lists) {
+	    if(lists == null || lists.length==0){
+	        return null;
+	    }
 
+		PriorityQueue<ListNode> myQueue = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode l1, ListNode l2) {
+                return l1.val - l2.val;
+            }
+        });
+		
+	    for (ListNode list : lists) {
+	    	while (list != null) {
+	    		myQueue.add(list);
+	    		list = list.next;
+	    	}
+	    }
+	    
+	    ListNode ans = null;
+	    if (!myQueue.isEmpty()) {
+	    	ans = myQueue.poll();
+	    }
+	    ListNode cur = ans;
+	    
+	    while (!myQueue.isEmpty()) {
+	    	cur.next = myQueue.poll();
+	    	cur = cur.next;
+	    }
+	    cur.next = null;
+	    	    
+	    return ans;
+	}
+	
+	
 	// This is algorithm number 5 in above
 	public static ListNode mergeKLists2By2(ListNode[] lists) {
 	    if(lists.length==0){
@@ -158,16 +193,17 @@ public class Merge_K_Sorted_Lists_23 {
 		tempNode11.next = tempNode12;
 
 		// test for even number of ListNode
-//		ListNode[] kLists = new ListNode[4];
+		ListNode[] kLists = new ListNode[4];
 		// test for odd number of ListNodes
-		ListNode[] kLists = new ListNode[3];
+//		ListNode[] kLists = new ListNode[3];
 
 		kLists[0] = tempNode1;
 		kLists[1] = tempNode4;
 		kLists[2] = tempNode9;
-//		kLists[3] = tempNode11;		
+		kLists[3] = tempNode11;		
 		
-		ListNode ans = mergeKLists2By2(kLists);
+//		ListNode ans = mergeKLists2By2(kLists);
+		ListNode ans = mergeKListsPriorityQueue(kLists);
 		while (ans != null) {
 			System.out.print(ans.val + "->");
 			ans = ans.next;
