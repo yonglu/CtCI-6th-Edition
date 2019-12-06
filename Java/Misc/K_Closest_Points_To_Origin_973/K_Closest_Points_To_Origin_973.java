@@ -59,22 +59,32 @@ public class K_Closest_Points_To_Origin_973 {
     		ans[i] = myQueue.poll();
     	}
     	
-    	return ans;
-    	
+    	return ans;   	
     }
     
     
 	public static void main(String[] args) {
 		int [][] result;
-		int[][] intervals = new int[][] {
+		int[][] points = new int[][] {
 			{1, 3},
 			{8, 10},
 			{2, 6},
 			{15, 18}
 		};
 
-		result = kClosest(intervals, 2);		
+		result = kClosest(points, 2);		
 		System.out.println("2 kClosest of [[1,3],[2,6],[8,10],[15,18]] is : " + 
-				Arrays.deepToString(result) );		
+				Arrays.deepToString(result) );	
+		
+		points = new int[][] {
+			{3, 3},
+			{5, -1},
+			{-2, 4}		
+		};
+
+		result = kClosest(points, 2);		
+		System.out.println("2 kClosest of [[3,3],[5,-1],[-2,4]] is : " + 
+				Arrays.deepToString(result) );	
+		
 	}
 }
