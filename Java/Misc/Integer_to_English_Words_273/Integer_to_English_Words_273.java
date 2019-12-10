@@ -2,6 +2,8 @@ package Integer_to_English_Words_273;
 
 import java.util.*;
 
+import jdk.nashorn.internal.ir.ReturnNode;
+
 /* Leetcode # 273. Integer to English Words
 
 Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 2^31 - 1.
@@ -31,93 +33,176 @@ Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Th
 public class Integer_to_English_Words_273 {
 
     public static String numberToWords(int num) {
-    	if (num < 0) {
-    		return "";
-    	} 
-    	
     	StringBuilder sb = new StringBuilder();
+    	if (num < 0) {
+    		sb.append("Negative ");
+    		num = -num;
+    	} 
+    	    	  	
     	String numStr = String.valueOf(num);
     	
     	if (1 <= numStr.length() && numStr.length() <= 3 ) {
-    		sb.append(thousandsToString(num));
+    		sb.append(threeDigitsToString(num));
     	} else if (4 <= numStr.length() && numStr.length() <= 6 ) {
-    		sb.append(thousandsToString(num/1000)).append(" thousands ").append(thousandsToString(num%1000));
+    		sb.append(sixDigitsToString(num));
     	} else if (7 <= numStr.length() && numStr.length() <= 9 ) {
-    		
+    		sb.append(nineDigitsToString(num));
     	} else if (10 <= numStr.length() && numStr.length() <= 12) {
-    		
+    		sb.append(twleveDigitsToString(num));
     	}
     	
+    	return sb.toString();
+    }
+    
+    
+    private static String twleveDigitsToString(int num) {
+    	StringBuilder sb = new StringBuilder();
+		int part1Num = num/1000000000;
+		int part1Remind = num%1000000000;
+		if (part1Num > 0) {
+			sb.append(threeDigitsToString(part1Num)).append(" Billion");
+		}
+		if (part1Remind > 0) {
+			if ((part1Remind/1000) > 0) {
+				sb.append(" ");
+			}
+			sb.append(nineDigitsToString(part1Remind));   
+		}
+		return sb.toString();
+    }
+
+    private static String nineDigitsToString(int num) {
+    	StringBuilder sb = new StringBuilder();
+		int part1Num = num/1000000;
+		int part1Remind = num%1000000;
+		if (part1Num > 0) {
+			sb.append(threeDigitsToString(part1Num)).append(" Million");
+		}
+		if (part1Remind > 0) {
+			if ((part1Remind/1000) > 0) {
+				sb.append(" ");
+			}
+			sb.append(sixDigitsToString(part1Remind));   
+		}
+		return sb.toString();
+    }
+    
+    private static String sixDigitsToString(int num) {
+    	StringBuilder sb = new StringBuilder();
+		int part1Num = num/1000;
+		int part1Remind = num%1000;
+		if (part1Num > 0) {
+			sb.append(threeDigitsToString(part1Num)).append(" Thousand");
+		}
+		if (part1Remind > 0) {
+			sb.append(" ").append(threeDigitsToString(part1Remind));   
+		}
+		return sb.toString();
+    }
+    
+    private static String threeDigitsToString(int num) {
+    	StringBuilder sb = new StringBuilder();
+    	if (0 <= num && 99 >= num) {
+    		sb.append(twoDigitsToString(num));
+    	} else if (100 <= num && 999 >= num) {
+    		int part1Num = num/100;
+    		int part1Remind = num%100;
+    		if (part1Num > 0) {
+    			sb.append(digitsToString(part1Num)).append(" Hundred");
+    		}
+    		if (part1Remind > 0) {
+    			sb.append(" ").append(twoDigitsToString(part1Remind));   
+    		}
+    	}    	
+    	return sb.toString();
+    }    
+    
+    private static String twoDigitsToString(int num) {
+    	StringBuilder sb = new StringBuilder();
+    	if (0 <= num && 9 >= num) {
+    		sb.append(digitsToString(num));
+    	} else if (10 <= num && 19 >= num) {
+        	switch (num) {
+		    	case 10:
+		    		return "Ten";
+		    	case 11:
+		    		return "Eleven";
+		    	case 12:
+		    		return "Twelve";
+		    	case 13:
+		    		return "Thirteen";
+		    	case 14:
+		    		return "Fourteen";
+		    	case 15:
+		    		return "Fifteen";
+		    	case 16:
+		    		return "Sixteen";
+		    	case 17:
+		    		return "Seventeen";
+		    	case 18:
+		    		return "Eighteen";
+		    	case 19:
+		    		return "Nineteen";
+		    	default:
+		    		return "";
+        	}
+    	} else if (20 <= num && 99 >= num) {
+    		int part1Num = num/10;
+    		int part1Remind = num%10;
+    		sb.append(tensToString(part1Num));
+    		if (part1Remind > 0) {
+    			sb.append(" ").append(digitsToString(part1Remind));  	
+    		}
+    	}
+
     	return sb.toString();
     }
     
     private static String digitsToString(int num) {
     	switch (num) {
 	    	case 0:
-	    		return "zero";
+	    		return "Zero";
 	    	case 1:
-	    		return "one";
+	    		return "One";
 	    	case 2:
-	    		return "two";
+	    		return "Two";
 	    	case 3:
-	    		return "three";
+	    		return "Three";
 	    	case 4:
-	    		return "four";
+	    		return "Four";
 	    	case 5:
-	    		return "five";
+	    		return "Five";
 	    	case 6:
-	    		return "six";
+	    		return "Six";
 	    	case 7:
-	    		return "seven";
+	    		return "Seven";
 	    	case 8:
-	    		return "eight";
+	    		return "Eight";
 	    	case 9:
-	    		return "nine";
-	    	case 10:
-	    		return "ten";
-	    	case 11:
-	    		return "eleven";
-	    	case 12:
-	    		return "twelve";
-	    	case 13:
-	    		return "thirdteen";
-	    	case 14:
-	    		return "fourteen";
-	    	case 15:
-	    		return "fifteen";
-	    	case 16:
-	    		return "sixteen";
-	    	case 17:
-	    		return "seventeen";
-	    	case 18:
-	    		return "eighteen";
-	    	case 19:
-	    		return "nineteen";
+	    		return "Nine";
 	    	default:
 	    		return "";
     	}
     }
-    
+
     private static String tensToString(int num) {
     	switch (num) {
 	    	case 2:
-	    		return "twenty";	
+	    		return "Twenty";	
 	    	case 3:
-	    		return "thirty";	
+	    		return "Thirty";	
 	    	case 4:
-	    		return "forty";	
+	    		return "Forty";	
 	    	case 5:
-	    		return "fifty";	
+	    		return "Fifty";	
 	    	case 6:
-	    		return "sixty";	
+	    		return "Sixty";	
 	    	case 7:
-	    		return "seventy";	
+	    		return "Seventy";	
 	    	case 8:
-	    		return "eighty";	
+	    		return "Eighty";	
 	    	case 9:
-	    		return "ninety";	
-	    	case 10:
-	    		return "one hundred";	
+	    		return "Ninety";	
 	    	default:
 	    		return "";
     	}
@@ -129,6 +214,20 @@ public class Integer_to_English_Words_273 {
 
 		result = numberToWords(123);		
 		System.out.println("123 is : " + result);	
+
+		result = numberToWords(12345);		
+		System.out.println("12345 is : " + result);	
+
+		result = numberToWords(1234567);		
+		System.out.println("1234567 is : " + result);	
+
+		result = numberToWords(1234567891);		
+		System.out.println("1234567891 is : " + result);	
 		
+		result = numberToWords(6030);		
+		System.out.println("6000 is : " + result);	
+
+		result = numberToWords(60000001);		
+		System.out.println("60000001 is : " + result);	
 	}
 }
