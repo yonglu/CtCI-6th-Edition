@@ -2,8 +2,6 @@ package Integer_to_English_Words_273;
 
 import java.util.*;
 
-import jdk.nashorn.internal.ir.ReturnNode;
-
 /* Leetcode # 273. Integer to English Words
 
 Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 2^31 - 1.
