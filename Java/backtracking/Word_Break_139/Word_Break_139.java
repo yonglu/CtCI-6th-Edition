@@ -50,11 +50,19 @@ public class Word_Break_139 {
         	return true;
         }
         
-        for (int i = start; i < s.length(); i++) {
+         int i = start;
+         
+         // Note here we don't need to do the for loop since we only need to start
+         // from beginning no need to start the word break in the middle.
+         while (i < s.length()) {
+//        for (int i = start; i < s.length(); i++) {
          		String word = s.substring(start, i+1);
         		if (wordDict.contains(word)) {
         			// if we know it failed before, continue
-        			if (memo.contains(i)) continue;
+        			if (memo.contains(i)) {
+        				i++; // comment out if doing the for loop
+        				continue;
+        			}
         			
         			// if finish and find solution, return true to 
         			// short circuit it
@@ -65,6 +73,8 @@ public class Word_Break_139 {
         			// remember the failure
         			memo.add(i);
         		}
+        		
+        		i++;
         }
         
     	return false;
