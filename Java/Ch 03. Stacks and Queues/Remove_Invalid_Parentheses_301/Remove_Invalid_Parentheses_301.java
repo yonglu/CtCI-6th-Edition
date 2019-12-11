@@ -40,6 +40,30 @@ public class Remove_Invalid_Parentheses_301 {
 
 	private static Set<String> validExpressions = new HashSet<String>();
 
+	public static List<String> removeInvalidParentheses(String s) {
+
+		int leftRem = 0, rightRem = 0;
+
+		// First, we find out the number of misplaced left and right parentheses.
+		for (int i = 0; i < s.length(); i++) {
+
+			// Simply record the left one.
+			if (s.charAt(i) == '(') {
+				leftRem++;
+			} else if (s.charAt(i) == ')') {
+				// If we don't have a matching left, then this is a misplaced right, record it.
+				rightRem = leftRem == 0 ? rightRem + 1 : rightRem;
+
+				// Decrement count of left parentheses because we have found a right
+				// which CAN be a matching one for a left.
+				leftRem = leftRem > 0 ? leftRem - 1 : leftRem;
+			}
+		}
+
+		recurse(s, 0, 0, 0, leftRem, rightRem, new StringBuilder());
+		return new ArrayList<String>(validExpressions);
+	}
+
 	/*
 	 * index - represents the current character that we have to process in the original string.
 	 * left_count - represents the number of left parentheses that have been added to the 
@@ -101,30 +125,6 @@ public class Remove_Invalid_Parentheses_301 {
 			// Delete for backtracking.
 			expression.deleteCharAt(length);
 		}
-	}
-
-	public static List<String> removeInvalidParentheses(String s) {
-
-		int leftRem = 0, rightRem = 0;
-
-		// First, we find out the number of misplaced left and right parentheses.
-		for (int i = 0; i < s.length(); i++) {
-
-			// Simply record the left one.
-			if (s.charAt(i) == '(') {
-				leftRem++;
-			} else if (s.charAt(i) == ')') {
-				// If we don't have a matching left, then this is a misplaced right, record it.
-				rightRem = leftRem == 0 ? rightRem + 1 : rightRem;
-
-				// Decrement count of left parentheses because we have found a right
-				// which CAN be a matching one for a left.
-				leftRem = leftRem > 0 ? leftRem - 1 : leftRem;
-			}
-		}
-
-		recurse(s, 0, 0, 0, leftRem, rightRem, new StringBuilder());
-		return new ArrayList<String>(validExpressions);
 	}
 
 	public static void main(String[] args) throws IOException {
