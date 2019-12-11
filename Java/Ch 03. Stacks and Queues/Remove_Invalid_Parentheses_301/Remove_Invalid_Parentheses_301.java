@@ -99,6 +99,8 @@ public class Remove_Invalid_Parentheses_301 {
 						rightRem - (character == ')' ? 1 : 0), expression);
 			}
 
+			// Note: this is a special case for backtracking recursion that, we have 2 paths: skip/discard or
+			// include.  For the skip/discard case, no need to backtrack.
 			expression.append(character);
 
 			// Simply recurse one step further if the current character is not a
