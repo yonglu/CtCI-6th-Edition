@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections; 
- 
 /*
  * 
  * Leetcode # 301. Remove Invalid Parentheses
