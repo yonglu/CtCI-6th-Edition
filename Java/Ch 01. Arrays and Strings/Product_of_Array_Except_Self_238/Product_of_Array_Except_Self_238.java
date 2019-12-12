@@ -2,6 +2,8 @@ package Product_of_Array_Except_Self_238;
 
 import java.util.*;
 
+import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
+
 
 /* Leetcode #238. Product of Array Except Self
 
@@ -23,12 +25,35 @@ purpose of space complexity analysis.)
 public class Product_of_Array_Except_Self_238 {
 
 
+	// Note, this can be O(1) space (ans array doesn't count) if
+	// we use the ans array to keep the before the intermediate value
 	public static int[] productExceptSelf(int[] nums) {
-
-		int[] ans = null;
 		
-		if (nums == null || nums.length == 0) {
-			throw new java.lang.IllegalArgumentException("bad parameters");
+		if (nums == null || nums.length == 0 || nums.length == 1) {
+			return new int[0];
+//			throw new java.lang.IllegalArgumentException("bad parameters");
+		}
+		
+		int[] ans = new int[nums.length];
+		int[] before = new int[nums.length];
+		int[] after = new int[nums.length];
+		
+		// nums = 1, 2, 3, 4
+		// before = 1, 1, 2, 6
+		before[0] = 1;
+		for (int i = 1; i < nums.length; i++ ) {
+			before[i] = before[i-1] * nums[i-1];
+		}
+		
+		// after = 24, 12, 4, 1
+		after[nums.length-1] = 1;
+		for (int j = nums.length - 2; j >= 0; j--) {
+			after[j] = after[j+1] * nums[j+1];
+		}
+		
+		// ans = 1*24, 1*12, 2*4, 6*1 (24, 12, 8, 6)
+		for (int k = 0; k < nums.length; k++) {
+			ans[k] = before[k] * after[k];
 		}
 
 		return ans;
