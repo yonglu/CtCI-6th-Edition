@@ -2,8 +2,6 @@ package Product_of_Array_Except_Self_238;
 
 import java.util.*;
 
-import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
-
 
 /* Leetcode #238. Product of Array Except Self
 
