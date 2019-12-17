@@ -14,7 +14,7 @@ Example 1:
 
 nums1 = [1, 3]
 nums2 = [2]
-
+ 
 The median is 2.0
 
 Example 2:
@@ -63,11 +63,11 @@ public class Median_of_Two_Sorted_Arrays_4 {
     private static int findKth(int[] nums1, int nums1Start, int[] nums2, int nums2Start, int k) {   	
 
 	/*
-	 *  If any of the two arrays is empty, then the kth element is the non-empty array’s kth element.
+	 *  If any of the two arrays is empty, then the kth element is the non-empty array's kth element.
      *  If k == 0, the kth element is the first element of A or B.
      *  For all other cases, we compare the (k / 2)th number in A and the (k / 2)th number in B. 
      *    If keyA < keyB, we get rid of first k /2 elements. 
-     *    We keep searching in the remainder for the (k – k /2)th element.
+     *    We keep searching in the remainder for the (k /2)th element.
 	 */
     	
         if (nums1Start == nums1.length)
