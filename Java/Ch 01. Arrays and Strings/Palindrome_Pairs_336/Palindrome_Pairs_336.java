@@ -23,6 +23,22 @@ Explanation: The palindromes are ["battab","tabbat"]
  */
 
 /*
+ * 
+ * Palindrome Pairs can be:
+ * 1. ["abc", "cba"] - string are reverse each other
+ * 2. ["aabc", "cb"] - left part "aa" is palindrome, right part "bc" is reverse of "cb" 
+ * 3. ["cbaa", "bc"] - right part "aa" is palindrome, left part "cb" is reverse of "bc"
+ * 
+ * Create HashMap to store the reversed word and its index.
+ * Divide each word as left and right, check for the above 3 match conditions
+ * 
+ * Note: ["abc", "cba"], if one substring is "", only count once. so the second check needs 
+ * to add right.length() != 0.
+ * 
+ * Time Complexity: O(n * len), n = words.length, len is word's average length.
+ * 
+ * Space: O(n), regardless ans. 
+ * 
  * https://zhuhan0.blogspot.com/2017/07/leetcode-336-palindrome-pairs.html
  * http://buttercola.blogspot.com/2016/06/leetcode-336-palindrome-pairs.html
  * https://www.cnblogs.com/Dylan-Java-NYC/p/6359809.html
