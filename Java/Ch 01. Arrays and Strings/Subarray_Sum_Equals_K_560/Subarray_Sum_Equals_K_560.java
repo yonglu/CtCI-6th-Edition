@@ -29,7 +29,7 @@ public class Subarray_Sum_Equals_K_560 {
 			return 0;
 		}
 		
-		// use to keep track of mapping of sum number to number of occurrences 
+		// use to keep track of mapping of sum number to number of occurrences of sum 
 		Map<Integer, Integer> mymap = new HashMap<Integer, Integer>();
 		
 		// Remember to initialize 0 sum has at least 1 occurrence.
