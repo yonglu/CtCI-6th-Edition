@@ -83,6 +83,7 @@ public class Word_Break_139 {
 	public static void main(String[] args) {
 		boolean result;
 		List<String> wordDict = new ArrayList<String>();
+		wordDict.add("lee");
 		wordDict.add("leet");
 		wordDict.add("code");
 		wordDict.add("and");
@@ -107,6 +108,6 @@ public class Word_Break_139 {
 		System.out.println(result); // expect true
 		
 		result = wordBreak("catsandog", wordDict);
-		System.out.println(result); // expect true
+		System.out.println(result); // expect false
 	}
 }
