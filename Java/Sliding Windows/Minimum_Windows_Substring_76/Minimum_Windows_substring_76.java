@@ -27,6 +27,69 @@ public class Minimum_Windows_substring_76 {
 
 
 	public static String minWindow(String s, String t) {
+		String result = "";
+		int resultLength = Integer.MAX_VALUE;
+		
+		if (s == null || t == null || s.length() < t.length() || s.length() == 0) {
+			return result;
+		}
+		
+		int count = 0;
+		Map<Character, Integer> map = new HashMap<Character, Integer>();
+		for (char c: t.toCharArray()) {
+			if (map.containsKey(c)) {
+				map.put(c, map.get(c) + 1);
+			} else {
+				map.put(c, 1);
+				count++;
+			}
+		}
+		
+		int begin = 0;
+		int end = 0;
+		while (end < s.length()) {
+			char cur = s.charAt(end);
+			if (map.containsKey(cur)) {
+				map.put(cur, map.get(cur) - 1);
+				if (map.get(cur) == 0) {
+					count--;
+				}
+			}
+			end++;
+			
+			while (count == 0) {
+				String temp = s.substring(begin, end);
+				if (temp.length() < resultLength) {
+					result = temp;
+					resultLength = result.length();
+				}
+				char cur2 = s.charAt(begin);
+				if (map.containsKey(cur2)) {
+					map.put(cur2, map.get(cur2) + 1);
+					if (map.get(cur2) == 1) {
+						count++;
+					}
+				}
+				
+				begin++;
+			}
+		}
+		
+		
+		return result;
+	}
+
+
+	public static void main(String[] args) {
+		
+		String result = minWindow("ADOBECODEBANC", "ABC");
+		
+		System.out.println("Minimum windows for \"ADOBECODEBANC\", \"ABC\" is: ");
+		System.out.println(result);
+		
+	}
+	
+	public static String minWindow_old(String s, String t) {
 		
 		String result = "";
 		if (s == null || t == null || s.length() < t.length()) {
@@ -84,14 +147,5 @@ public class Minimum_Windows_substring_76 {
 		
 		return result;
 	}
-
-
-	public static void main(String[] args) {
-		
-		String result = minWindow("ADOBECODEBANC", "ABC");
-		
-		System.out.println("Minimum windows for \"ADOBECODEBANC\", \"ABC\" is: ");
-		System.out.println(result);
-		
-	}
+	
 }

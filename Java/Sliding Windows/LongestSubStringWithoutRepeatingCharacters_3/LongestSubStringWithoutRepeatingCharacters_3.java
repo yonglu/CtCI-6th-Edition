@@ -33,6 +33,51 @@ public class LongestSubStringWithoutRepeatingCharacters_3 {
     	int result = Integer.MIN_VALUE;
     	
     	if (s == null || s.isEmpty()) {
+    		return result;
+    	}
+    	
+    	Set<Character> set = new HashSet<Character>();
+    	
+    	int begin = 0;
+    	int end = 0;
+    	while (end < s.length() && begin < s.length()) {
+    		char cur = s.charAt(end);
+    		if (!set.contains(cur)) {
+    			set.add(cur);
+    			if (end - begin + 1 > result) {
+    				result = end - begin + 1;
+    			}
+    			end++;
+    		} else {
+    			if (set.contains(s.charAt(begin))) {
+    				set.remove(s.charAt(begin));
+    			}
+    			begin++;
+    		}
+    	}
+    	return result;
+    }
+
+	public static void main(String[] args) {
+		
+		int result = lengthOfLongestSubstring("abcabcbb");		
+		System.out.println("Length of longest substring \"abcabcbb\" is: ");
+		System.out.println(result);
+
+		result = lengthOfLongestSubstring("bbbbb");		
+		System.out.println("Length of longest substring \"bbbbb\" is: ");
+		System.out.println(result);
+
+		result = lengthOfLongestSubstring("pwwkew");
+		System.out.println("Length of longest substring \"pwwkew\" is: ");
+		System.out.println(result);
+
+	}
+	
+    public static int lengthOfLongestSubstring_old(String s) { 
+    	int result = Integer.MIN_VALUE;
+    	
+    	if (s == null || s.isEmpty()) {
     		return 0;
     	}
     	   
@@ -58,20 +103,5 @@ public class LongestSubStringWithoutRepeatingCharacters_3 {
     	
     	return result;
     }
-
-	public static void main(String[] args) {
-		
-		int result = lengthOfLongestSubstring("abcabcbb");		
-		System.out.println("Length of longest substring \"abcabcbb\" is: ");
-		System.out.println(result);
-
-		result = lengthOfLongestSubstring("bbbbb");		
-		System.out.println("Length of longest substring \"bbbbb\" is: ");
-		System.out.println(result);
-
-		result = lengthOfLongestSubstring("pwwkew");
-		System.out.println("Length of longest substring \"pwwkew\" is: ");
-		System.out.println(result);
-
-	}
+	
 }

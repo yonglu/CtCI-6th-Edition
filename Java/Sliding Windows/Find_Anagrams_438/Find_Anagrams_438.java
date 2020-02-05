@@ -51,6 +51,74 @@ public class Find_Anagrams_438 {
     		return lists;
     	}
     	
+    	Map<Character, Integer> map = new HashMap<Character, Integer>();
+    	
+    	int count = 0;
+    	for (char c: p.toCharArray()) {
+    		if (map.containsKey(c)) {
+    			map.put(c, map.get(c) + 1);
+    		} else {
+    			map.put(c,  1);
+    			count++;
+    		}
+    	}
+    	
+    	int end = 0;
+    	int begin = 0;
+    	while (end < s.length()) {
+    		char cur = s.charAt(end);
+    		if (map.containsKey(cur)) {
+    			map.put(cur,  map.get(cur) - 1);
+    			if (map.get(cur) == 0) {
+    				count--;
+    			}
+    		}
+    		end++;
+    		
+    		while (count == 0) {
+    			if (end - begin == p.length()) {
+    				lists.add(begin);
+    			}
+    			char cur2 = s.charAt(begin);
+    			if (map.containsKey(cur2)) {
+    				map.put(cur2, map.get(cur2) + 1);
+    				if (map.get(cur2) == 1) {
+    					count++;
+    				}
+    			}
+    			begin++;
+    		}
+    		
+    	}
+    	   	
+    	return lists;
+    }
+    
+
+	public static void main(String[] args) {
+		
+		List<Integer> lists = findAnagrams("cbaebabacd", "abc");
+		
+		System.out.println("Find Anagrams for \"cbaebabacd\", \"abc\" is: ");
+		for (Integer i : lists) {
+			System.out.println(i);
+		}
+
+		lists = findAnagrams("abab", "ab");
+		
+		System.out.println("Find Anagrams for \"abab\", \"ab\" is: ");
+		for (Integer i : lists) {
+			System.out.println(i);
+		}		
+	}
+	
+    public static List<Integer> findAnagrams_old(String s, String p) {
+    	List<Integer> lists = new ArrayList<Integer>();
+    	
+    	if (s == null || p == null || s.length() < p.length() || s.isEmpty() || p.isEmpty()) {
+    		return lists;
+    	}
+    	
     	// Record the String p in HaskMap
     	Map<Character, Integer> wordMap = new HashMap<Character, Integer>();
     	
@@ -96,22 +164,5 @@ public class Find_Anagrams_438 {
     	
     	return lists;
     }
-
-
-	public static void main(String[] args) {
-		
-		List<Integer> lists = findAnagrams("cbaebabacd", "abc");
-		
-		System.out.println("Find Anagrams for \"cbaebabacd\", \"abc\" is: ");
-		for (Integer i : lists) {
-			System.out.println(i);
-		}
-
-		lists = findAnagrams("abab", "ab");
-		
-		System.out.println("Find Anagrams for \"abab\", \"ab\" is: ");
-		for (Integer i : lists) {
-			System.out.println(i);
-		}		
-	}
+	
 }
