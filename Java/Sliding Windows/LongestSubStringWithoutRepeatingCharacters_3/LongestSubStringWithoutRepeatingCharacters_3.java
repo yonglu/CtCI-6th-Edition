@@ -41,9 +41,8 @@ public class LongestSubStringWithoutRepeatingCharacters_3 {
     	int begin = 0;
     	int end = 0;
     	while (end < s.length() && begin < s.length()) {
-    		char cur = s.charAt(end);
-    		if (!set.contains(cur)) {
-    			set.add(cur);
+    		if (!set.contains(s.charAt(end))) {
+    			set.add(s.charAt(end));
     			if (end - begin + 1 > result) {
     				result = end - begin + 1;
     			}
