@@ -32,17 +32,15 @@ public class Two_Sum_1_11_16_2019 {
 		// No need to use a set if you already have map????
 		// If only ask for number not index, then use set only.
 		Map<Integer, Integer> indexMap = new HashMap<Integer, Integer>();
-		Set<Integer> numsSet = new HashSet<Integer>();
 		
 		for (int i = 0; i < nums.length; i++) {
 			int pairNum = target-nums[i];
-			if (numsSet.contains(pairNum)) {
+			if (indexMap.containsKey(pairNum)) {
 				result[0] = indexMap.get(pairNum);
 				result[1] = i;
 				break;
 			}
 			indexMap.put(nums[i], i);
-			numsSet.add(nums[i]);
 		}
 		
 		return result;
