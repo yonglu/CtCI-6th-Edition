@@ -21,7 +21,7 @@ public class MyAnswerDFS {
 		}
 		
 		LinkedList<TreeNode> levelLinkedList;
-		if (result.size() < level + 1) {
+		if (result.size() == level) {
 			levelLinkedList = new LinkedList<TreeNode>();
 			result.add(level, levelLinkedList);
 		} else {
