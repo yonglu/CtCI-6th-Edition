@@ -8,6 +8,8 @@ public class QuestionB {
 		if (n == null) {
 			return true;
 		}
+		// Note: if use integer.MIN_VALUE and Integer.MAX_VALUE, then it would fails if
+		// we have MIN_VALUE or MAX_VALUE in our node data.
 		if ((min != null && n.data <= min) || (max != null && n.data > max)) {
 			return false;
 		}
