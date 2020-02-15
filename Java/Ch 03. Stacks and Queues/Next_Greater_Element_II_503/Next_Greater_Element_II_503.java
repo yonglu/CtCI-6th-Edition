@@ -28,24 +28,24 @@ The second 1's next greater number needs to search circularly, which is also 2.
  * 		2. nums is circular array
  * 
  * Solution for different 1 is that: Our old map from x to next greater element of x needs to be
- * map from Pair of X and X index to next greater element of x.
+ * map from x index to next greater element of x.
  * 
  * Solution to different 2 is that: loop through nums twice, but don't erase the first finding.
  */
 
 public class Next_Greater_Element_II_503 {
 
-	static class Pair {
-		int key;
+	static class Info {
+		int index;
 		int value;
-		public Pair(int key, int value) {
+		public Info(int index, int value) {
 			super();
-			this.key = key;
+			this.index = index;
 			this.value = value;
 		}
 		
-		public int getKey() {
-			return key;
+		public int getIndex() {
+			return index;
 		}
 		public int getValue() {
 			return value;
@@ -59,7 +59,7 @@ public class Next_Greater_Element_II_503 {
         }
         int[] ret = new int[nums.length];
         Arrays.fill(ret, -1);
-        Stack<Pair> stack = new Stack<Pair>();
+        Stack<Info> stack = new Stack<Info>();
         
         // loop 2 times for circular array
         for (int i = 0; i < 2 * nums.length; i++) {
@@ -67,16 +67,16 @@ public class Next_Greater_Element_II_503 {
         	int idx = i % nums.length;
         	
     		while (!stack.isEmpty() && stack.peek().getValue() < nums[idx]) {
-    			Pair temp = stack.pop();
+    			Info temp = stack.pop();
     			// Don't overwrite the next greater element if it is found already.
-    			if (ret[temp.getKey()] == -1) {
-        			ret[temp.getKey()] = nums[idx];    				
+    			if (ret[temp.getIndex()] == -1) {
+        			ret[temp.getIndex()] = nums[idx];    				
     			} 
     		} 
     		
     		// Don't push to stack if we have found the next greater element.
     		if (ret[idx] == -1) {
-    			stack.push(new Pair(idx, nums[idx]));
+    			stack.push(new Info(idx, nums[idx]));
     		}
     	}
         
