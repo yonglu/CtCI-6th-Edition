@@ -7,6 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.StringTokenizer;
+
+import CtCILibrary.TreeNode;
 
 /*
  * Leetcode #297. Serialize and Deserialize Binary Tree
@@ -49,6 +52,70 @@ public class Serialize_and_Deserialize_Binary_Tree_297 {
 	      TreeNode(int x) { val = x; }  
 	}
 
+	
+    /*
+     *  Encodes a tree to a single string in DFS (pre order recursively).
+     *  
+     *  This is cleaner implementation than serializePreOrderRecursively
+     *  
+    1
+   / \
+  2   3
+     / \
+    4   5
+
+as "[1,2,#,#,3,4,#,#,5,#,#]"
+	*/
+	public static String serializeDFS(TreeNode root) {
+		StringBuilder sb = new StringBuilder();
+		serializeDFS(root, sb);
+		return sb.toString();
+	}
+
+	private static void serializeDFS(TreeNode x, StringBuilder sb) {
+		if (x == null) {
+			sb.append("#,");
+		} else {
+			sb.append(x.val + ",");
+			serializeDFS(x.left, sb);
+			serializeDFS(x.right, sb);
+		}
+	}
+
+    /*
+     *  Decodes your encoded DFS (pre order) data to tree.
+     *  
+     *  This is cleaner implementation than deserializePreOrderRecursively
+     *  
+"[1,2,#,#,3,4,#,#,5,#,#]" as
+
+    1
+   / \
+  2   3
+     / \
+    4   5
+
+     */
+	public static TreeNode deserializeDFS(String s) {
+		if (s == null || s.length() == 0)
+			return null;
+		StringTokenizer st = new StringTokenizer(s, ",");
+		return deserializeDFS(st);
+	}
+
+	private static TreeNode deserializeDFS(StringTokenizer st) {
+		if (!st.hasMoreTokens())
+			return null;
+		String val = st.nextToken();
+		if (val.equals("#"))
+			return null;
+		TreeNode root = new TreeNode(Integer.parseInt(val));
+		root.left = deserializeDFS(st);
+		root.right = deserializeDFS(st);
+		return root;
+	}
+	
+	
     /*
      *  Encodes a tree to a single string in level order.
      *  
@@ -199,7 +266,7 @@ as "[1,2,#,#,3,4,#,#,5,#,#]"
     }
    
     /*
-     *  Decodes your encoded level order data to tree.
+     *  Decodes your encoded pre order data to tree.
      *  
 "[1,2,#,#,3,4,#,#,5,#,#]" as
 
@@ -260,8 +327,14 @@ as "[1,2,#,#,3,4,#,#,5,#,#]"
         n.right.right.left = null;
         n.right.right.right = null;
         
+        System.out.println("DFS: " + serializeDFS(n));
+        TreeNode root = deserializeDFS("1,2,3,#,#,4,5,#,#,#,#");
+        System.out.println("DFS: " + serializeDFS(root));
+		
+        System.out.println("");
+
         System.out.println("Level order: " + serializeLevelOrder(n));
-        TreeNode root = deserializeLevelOrder("1,2,3,#,#,4,5,#,#,#,#");
+        root = deserializeLevelOrder("1,2,3,#,#,4,5,#,#,#,#");
         System.out.println("Level Order: " + serializeLevelOrder(root));
 		
         System.out.println("");
