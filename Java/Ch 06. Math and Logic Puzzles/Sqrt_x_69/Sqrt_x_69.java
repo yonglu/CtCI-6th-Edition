@@ -28,6 +28,7 @@ Explanation: The square root of 8 is 2.82842..., and since
 
 public class Sqrt_x_69 {
 
+	// O(logN) using binary search
 	public static int mySqrt(int x) {
 		if (x < 0) {
 			return -1;
@@ -58,6 +59,28 @@ public class Sqrt_x_69 {
         // Note, have to use the r value nor l value. 
         // Maybe need to tile to right default Java integer division flooring
 		return r;        
+	}
+	
+	// O(logN) using brute force.
+	public static int mySqrtBruteForce(int x) {
+		if (x < 0) {
+			return -1;
+		} 
+		if (x == 0) {
+			return 0;
+		}
+		if (x == 1) {
+			return 1;
+		}
+
+		int ans = 1;
+		for (ans = 1; ans < x; ans++) {
+			if (ans > x/ans) {
+				break;
+			}
+		}
+		
+		return --ans;
 	}
 	
     
