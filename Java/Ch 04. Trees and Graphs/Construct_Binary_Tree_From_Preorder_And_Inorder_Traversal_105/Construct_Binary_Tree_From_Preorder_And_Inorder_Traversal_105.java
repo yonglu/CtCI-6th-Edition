@@ -45,12 +45,12 @@ public class Construct_Binary_Tree_From_Preorder_And_Inorder_Traversal_105 {
 	 */
 	
 	public static TreeNode buildTree(int[] preorder, int[] inorder) {
-		if ( preorder == null || inorder == null || preorder.length != inorder.length) {
+	    if ( preorder == null || inorder == null || preorder.length != inorder.length)         {
 			return null;
-		}
+		 }
 		
 		int size = preorder.length;
-		return buildTree(preorder, inorder, 0, size - 1, 0, size -1);
+		return buildTree(preorder, inorder, 0, size - 1, 0, size -1);        
 	}
 
 	private static TreeNode buildTree(int[] preorder, int[] inorder,
@@ -97,7 +97,8 @@ public class Construct_Binary_Tree_From_Preorder_And_Inorder_Traversal_105 {
 		int[] inorder = { 9,3,15,20,7 };
 		
 		root = buildTree(preorder, inorder);
-		System.out.println(root);
+		System.out.print("Use debug to check result:  ");
+		System.out.println(root.val);
 
 	}
 }
