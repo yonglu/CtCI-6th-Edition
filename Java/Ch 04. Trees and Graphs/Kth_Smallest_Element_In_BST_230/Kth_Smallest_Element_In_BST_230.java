@@ -92,29 +92,29 @@ public class Kth_Smallest_Element_In_BST_230 {
 			return Integer.MIN_VALUE;
 		}
 		
-		// Remember Primitive is pass by value, cannot just pass an "int count"
-		List<Integer> list = new ArrayList<Integer>();
-		list.add(1);
-		return inorderReverse(root, k, list);
+		// Remember Primitive is pass by value, cannot just pass an "int count".
+		// Here, instead of ArrayList just use int[]
+		int count = 1;
+		int[] arr = { count };
+		return inorderReverse(root, k, arr);
 	}
 	
-	private static int inorderReverse(TreeNode root, int k, List<Integer> list) {
+	private static int inorderReverse(TreeNode root, int k, int[] arr) {
 		if (root == null) {
 			return Integer.MIN_VALUE;
 		}
 		
-		int val = inorderReverse(root.right, k, list);
+		int val = inorderReverse(root.right, k, arr);
 		if (val != Integer.MIN_VALUE) {
 			return val;
 		}
 		
-		if (k == list.get(0)) {
+		if (k == arr[0]) {
 			return root.val;
 		}
-		list.set(0, list.get(0)+1);
+		arr[0] = arr[0] + 1;
 		
-
-		val = inorderReverse(root.left, k, list);
+		val = inorderReverse(root.left, k, arr);
 		if (val != Integer.MIN_VALUE) {
 			return val;
 		}
