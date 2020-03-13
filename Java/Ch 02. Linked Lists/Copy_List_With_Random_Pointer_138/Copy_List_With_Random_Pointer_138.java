@@ -65,12 +65,17 @@ public class Copy_List_With_Random_Pointer_138 {
     	
     	Node runner = head;
     	
+    	Node copy = new Node(runner.val);
+		map.put(runner, copy);
+    	
     	while (runner != null) {
-    		Node copy = new Node(runner.val);
-    		copy.next = runner.next;
-    		map.put(runner, copy);
+    		Node temp = new Node(runner.val);
+    		map.put(runner, temp);
     		
+    		copy.next = temp;
+
     		runner = runner.next;
+    		copy = copy.next;
     	}
     	
     	runner = head;
