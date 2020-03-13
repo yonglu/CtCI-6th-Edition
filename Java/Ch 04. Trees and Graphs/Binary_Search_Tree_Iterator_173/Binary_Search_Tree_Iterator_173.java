@@ -50,9 +50,7 @@ class BSTIterator {
 	private Stack<TreeNode> stack = new Stack<TreeNode>();
 	
     public BSTIterator(TreeNode root) {
-    	if (root == null) {
-    		return;
-    	}
+    	// Push the all left most nodes to stack
     	while (root !=  null) {
     		stack.push(root);
     		root = root.left;
@@ -67,6 +65,7 @@ class BSTIterator {
     	
     	TreeNode n = stack.pop();
     	
+    	// after pop, push the right child's left most nodes to stack
         TreeNode temp = n.right;
     	while(temp != null) {
     		stack.push(temp);
