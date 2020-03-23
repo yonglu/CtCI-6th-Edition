@@ -87,6 +87,10 @@ public class Atoi_And_Itoa {
 	public static String itoa(int n) {
 		StringBuilder sb = new StringBuilder();
 		
+		if ( n == 0) {
+			return "0";
+		}
+		
 		boolean neg = false;
 		if (n >> 31 == 1) {
 			neg = true;
@@ -112,11 +116,15 @@ public class Atoi_And_Itoa {
 	public static void main(String[] args) {
         System.out.println("atoi(45) is (expected 45): " + atoi("45"));
         
+        System.out.println("atoi(0) is (expected 0): " + atoi("0"));
+
         System.out.println("atoi(-45) is (expected -45): " + atoi("-45"));     
         
         System.out.println("atoi(4a5) is (expected 45): " + atoi("4a5"));
 
         System.out.println("itoa(45) is (expected 45): " + itoa(45));
+
+        System.out.println("itoa(0) is (expected 0): " + itoa(0));
         
         System.out.println("itoa(-45) is (expected -45): " + itoa(-45));
 	}
