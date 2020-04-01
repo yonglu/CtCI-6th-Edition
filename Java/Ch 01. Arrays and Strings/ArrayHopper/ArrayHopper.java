@@ -11,6 +11,10 @@ import java.util.List;
  * through that element.
  * 
  */
+
+/*
+ *  See Leetcode #55 Jump Games
+ */
 public class ArrayHopper {  
 	private static int minJumps(int[] arr) { 
 		if (arr == null || arr[0] == 0) {
