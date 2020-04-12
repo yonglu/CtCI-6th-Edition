@@ -40,7 +40,8 @@ public class Subarray_Sum_Equals_K_560 {
 			sum += num;
 			int diff = sum - k;
 			if (mymap.containsKey(diff)) {
-				ans += mymap.get(diff);
+				// Add the sum because can have multiple locations with sum(diff) if the sum between the multiple locations is zero.
+				ans += mymap.get(diff);   
 			}
 			
 			if (mymap.containsKey(sum)) {
