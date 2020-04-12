@@ -35,9 +35,6 @@ import java.util.*;
  * 				instead of Long.parseLong(num.substring(start, start + 1)) or 
  * 				num.charAt[start] - "0")
  * 
- * 			For Palindrome Partition, don't need to do the for loop since we only need to start
- *  	        from beginning no need to start the palindrome partition in the middle.
- *
  *			For N-queens - loop through the columns and backtracking on rows 
  *				(it would work if loop through rows and backtracking on columns).  
  *				This is more efficient that DFS because only one queen per row and column.
@@ -338,18 +335,12 @@ public class GeneralBacktracking_09_25_2019 {
 			lists.add(new ArrayList<String>(tempList));
 		}
 		
-        // Note here we don't need to do the for loop since we only need to start
-        // from beginning no need to start the palindrome partition in the middle.
-		int i = start;
-        while (i < s.length()) {		
-//		for (int i = start; i < s.length(); i++) {
+		for (int i = start; i < s.length(); i++) {
 			if (isPalindrome(s, start, i)) {
 				tempList.add(s.substring(start, i+1));
 				palindromePartition(lists, tempList, s, i+1);
 				tempList.remove(tempList.size() - 1);
-			}
-			
-			i++;
+			}			
 		}
 	}
 	
