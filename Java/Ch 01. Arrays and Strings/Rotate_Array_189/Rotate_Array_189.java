@@ -36,11 +36,20 @@ public class Rotate_Array_189 {
 		if (nums == null || k <= 0) {
 			return;
 		}
-		
-		reverse(nums, 0, nums.length-1);
-		reverse(nums, 0, k-1);
-		reverse(nums, k, nums.length-1);
-		
+
+		int len = nums.length;
+		// Let's normalize rotations
+		// if k > array size or k is negative.
+		k = k % len;
+		if (k < 0) {
+			// calculate the positive rotations needed.
+			k = k + len;
+		}
+
+		reverse(nums, 0, nums.length - 1);
+		reverse(nums, 0, k - 1);
+		reverse(nums, k, nums.length - 1);
+
 		return;
 	}
 	
