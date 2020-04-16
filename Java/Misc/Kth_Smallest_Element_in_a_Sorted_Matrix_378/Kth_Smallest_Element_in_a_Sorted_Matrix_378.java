@@ -114,7 +114,8 @@ public class Kth_Smallest_Element_in_a_Sorted_Matrix_378 {
     	while (k-1 > 0) {
     		int[] temp = pq.poll();
     		
-    		// Note if we are at end of the row, don't add new one, just let it poll the next row item. 
+    		// If not at the end of the row, add next point from the same row
+    		// If at the end of row don’t add the next point, just let it poll the next column point.
     		if (temp[1] < matrix[0].length - 1) {
     			pq.offer(new int[] {temp[0], temp[1] + 1});
     		}
