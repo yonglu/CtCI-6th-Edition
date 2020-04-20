@@ -49,12 +49,15 @@ public class Remove_Invalid_Parentheses_301 {
 			if (s.charAt(i) == '(') {
 				leftRem++;
 			} else if (s.charAt(i) == ')') {
+				
 				// If we don't have a matching left, then this is a misplaced right, record it.
-				rightRem = leftRem == 0 ? rightRem + 1 : rightRem;
-
-				// Decrement count of left parentheses because we have found a right
-				// which CAN be a matching one for a left.
-				leftRem = leftRem > 0 ? leftRem - 1 : leftRem;
+				if (leftRem == 0) {
+					rightRem += 1;
+				} else if (leftRem > 0) {
+					// Decrement count of left parentheses because we have found a right
+					// which CAN be a matching one for a left.
+					leftRem -= 1;
+				}
 			}
 		}
 
