@@ -61,10 +61,40 @@ public class Remove_Invalid_Parentheses_301 {
 			}
 		}
 
-		recurse(s, 0, 0, 0, leftRem, rightRem, new StringBuilder());
+        dfs(s, 0, validExpressions, new StringBuilder(), leftRem, rightRem, 0);
+        
+        // dfs is much easier to understand!!
+//		recurse(s, 0, 0, 0, leftRem, rightRem, new StringBuilder());
+        
 		return new ArrayList<String>(validExpressions);
 	}
 
+	private static void dfs(String s, int i, Set<String> res, StringBuilder sb, int leftRem, int rightRem, int open) {
+		int len = sb.length();// decision point
+		
+		if (open < 0 || leftRem < 0 || rightRem < 0)
+			return;// leftRem rightRem limit the max removal boundary,
+		// else will return all possibilities["","()()","()","(())","()()()","(())()"]
+		if (i == s.length()) {
+			if (open == 0)
+				res.add(sb.toString());// back tracking till the full length
+			return;
+		} else {
+			// we don't need for loop since no ordering(not like subsets,permu problem)
+			char c = s.charAt(i);
+			if (c == '(') {// order matters here, once append c to sb, sb contains c when backtracking
+				dfs(s, i + 1, res, sb, leftRem - 1, rightRem, open); // remove '('
+				dfs(s, i + 1, res, sb.append('('), leftRem, rightRem, open + 1); // use '('
+			} else if (c == ')') {
+				dfs(s, i + 1, res, sb, leftRem, rightRem - 1, open); // remove ')'
+				dfs(s, i + 1, res, sb.append(')'), leftRem, rightRem, open - 1); // use ')'
+			} else {
+				dfs(s, i + 1, res, sb.append(c), leftRem, rightRem, open);// append non '(',')' char
+			}
+		}
+		sb.setLength(len);// reset back to decision point -- remove last char of sb
+	}
+	
 	/*
 	 * index - represents the current character that we have to process in the original string.
 	 * left_count - represents the number of left parentheses that have been added to the 
