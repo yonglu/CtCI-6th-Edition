@@ -51,35 +51,26 @@ public class Max_Area_Of_Islands_695 {
     		Arrays.fill(visited[i], false);
     	}
     	
-    	int maxArea = Integer.MIN_VALUE;
+    	int maxArea = 0;
     	
     	for (int i=0; i<grid.length; i++) {
     		for (int j=0; j<grid[0].length; j++) {
     			if(grid[i][j] == 1 && !visited[i][j]) {
-    				List<Integer> tempArea = new ArrayList<Integer>();
-    				tempArea.add(0);
-    				countArea(grid, visited, i, j, tempArea);
-    				if (tempArea.get(0) > maxArea) {
-    					maxArea = tempArea.get(0);
-    				}
+    				int tempArea = countArea(grid, visited, i, j);
+    				maxArea = Math.max(maxArea, tempArea);
     			}
     		}
-    	}
-    	
-    	if (maxArea == Integer.MIN_VALUE) {
-    		maxArea = 0;
     	}
     	
     	return maxArea;
     }
 
-    private static void countArea(int[][] grid, boolean[][] visited,
-    		int row, int col, List<Integer> tempArea) {
-    	int temp = tempArea.get(0);
-    	tempArea.clear();
-    	tempArea.add(temp + 1);
+    private static int countArea(int[][] grid, boolean[][] visited,
+    		int row, int col) {
     	
     	visited[row][col] = true;
+    	
+    	int curArea = 0;
     	
     	for (int[] delta : deltas) {
     		int newRow = row + delta[0];
@@ -87,9 +78,16 @@ public class Max_Area_Of_Islands_695 {
     		if (newCol >= 0 && newCol < grid[0].length &&
     			newRow >= 0 && newRow < grid.length &&
     			!visited[newRow][newCol] &&
-    			grid[newRow][newCol] == 1)
-    		countArea(grid, visited, newRow, newCol, tempArea); 			
-    	}    	
+    			grid[newRow][newCol] == 1) {
+    			int tempArea = countArea(grid, visited, newRow, newCol); 	
+    			curArea += tempArea;
+    		}
+    	}   
+    	
+    	// count itself
+    	curArea++;
+    	
+    	return curArea;
     }
     
 	public static void main(String[] args) {
