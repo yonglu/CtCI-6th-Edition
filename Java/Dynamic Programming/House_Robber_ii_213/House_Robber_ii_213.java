@@ -52,11 +52,11 @@ public class House_Robber_ii_213 {
 
 		// result with 1st element included and last is not included
 		Map<Integer, Integer> memo1 = new HashMap<Integer, Integer>();
-		int result1 = Math.max(rob(nums, memo1, nums.length - 1, 0), rob(nums, memo1, nums.length, 1));
+		int result1 = Math.max(rob(nums, memo1, nums.length - 1, 0), rob(nums, memo1, nums.length - 1, 1));
 
 		//result with 1st element is not included and last is included
 		Map<Integer, Integer> memo2 = new HashMap<Integer, Integer>();
-		int result2 = Math.max(rob(nums, memo2, nums.length, 2), rob(nums, memo2, nums.length, 1));
+		int result2 = Math.max(rob(nums, memo2, nums.length, 1), rob(nums, memo2, nums.length, 2));
 		
 		return Math.max(result1, result2);
 	}
