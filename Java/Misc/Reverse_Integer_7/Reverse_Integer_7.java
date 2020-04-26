@@ -38,6 +38,36 @@ public class Reverse_Integer_7 {
     		x = -x;
     	}
     	
+    	long ans = 0;    	
+    	while (x > 0) {
+    		int rem = x%10;
+    		ans = ans * 10 + rem;
+    		x = x/10;
+    	}
+
+    	if (isNegative) {
+    		ans = -ans;
+    	}
+    	
+    	// check if ans is overflow
+    	if (ans > Integer.MAX_VALUE || ans < Integer.MIN_VALUE) {
+    		return 0;
+    	}
+    	
+    	return (int)ans;
+    }
+    
+    /*
+     * Use Stack to reverse the digit.  Not necessary here but remember we can use Stack to reverse stuffs
+     */
+    public static int reverse2(int x) {
+    	boolean isNegative = false;
+    	
+    	if (x < 0) {
+    		isNegative = true;
+    		x = -x;
+    	}
+    	
     	Stack<Integer> stack = new Stack<Integer>();
     	
     	while (x > 0) {
