@@ -10,8 +10,8 @@ Convert an XML string to an n-ary tree.
 Read an XML element using the tokenizer.
 Create a tree node of that element and push it on the stack.
 Use stack to keep track of levels
-	* If the element is an opening tag (startElement) or text, push it as a child of the node at stack top.
-	* If the element is an opening tag (startElement), push it to the stack.
+	* If the element is an opening tag (startElement), add it as a child of the node at stack top, then push it to the stack.
+	* If the element is a text, add it as a child of the node at stack top.  (don’t need to push it to stack.)
 	* If the element is a closing tag (endElement) (indicating that we have processed all children of 
 			the element on top of the stack), pop the top element from the stack.
 
