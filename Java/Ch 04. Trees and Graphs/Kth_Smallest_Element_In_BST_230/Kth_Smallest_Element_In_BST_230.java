@@ -44,6 +44,8 @@ class TreeNode {
 
  
 public class Kth_Smallest_Element_In_BST_230 {
+	
+	static int count = 1;
 
 	public static int kthSmallest(TreeNode root, int k) {   		
 		if (root == null) {
@@ -54,28 +56,31 @@ public class Kth_Smallest_Element_In_BST_230 {
 			return Integer.MIN_VALUE;
 		}
 		
-		// Remember Primitive is pass by value, cannot just pass an "int count"
-		List<Integer> list = new ArrayList<Integer>();
-		list.add(1);
-		return inorder(root, k, list);
+		// Remember cannot just pass an "int count" parameter because in recursive depth first search 
+		// the count will go back when we return.  Solution would be:
+		// 	1. use global int count OR
+		// 	2. List<Integer> count = new ArrayList<Integer>();
+		//	   count.add(1);
+		count = 1;
+		return inorder(root, k);
 	}
 	
-	private static int inorder(TreeNode root, int k, List<Integer> list) {
+	public static int inorder(TreeNode root, int k) {
 		if (root == null) {
 			return Integer.MIN_VALUE;
 		}
 		
-		int val = inorder(root.left, k, list);
+		int val = inorder(root.left, k);
 		if (val != Integer.MIN_VALUE) {
 			return val;
 		}
 		
-		if (k == list.get(0)) {
+		if (k == count) {
 			return root.val;
 		}
-		list.set(0, list.get(0)+1);
+		count++;
 		
-		val = inorder(root.right, k, list);
+		val = inorder(root.right, k);
 		if (val != Integer.MIN_VALUE) {
 			return val;
 		}
@@ -92,29 +97,31 @@ public class Kth_Smallest_Element_In_BST_230 {
 			return Integer.MIN_VALUE;
 		}
 		
-		// Remember Primitive is pass by value, cannot just pass an "int count".
-		// Here, instead of ArrayList just use int[]
-		int count = 1;
-		int[] arr = { count };
-		return inorderReverse(root, k, arr);
+		// Remember cannot just pass an "int count" parameter because in recursive depth first search 
+		// the count will go back when we return.  Solution would be:
+		// 	1. use global int count OR
+		// 	2. List<Integer> count = new ArrayList<Integer>();
+		//	   count.add(1);
+		count = 1;
+		return inorderReverse(root, k);
 	}
 	
-	private static int inorderReverse(TreeNode root, int k, int[] arr) {
+	private static int inorderReverse(TreeNode root, int k) {
 		if (root == null) {
 			return Integer.MIN_VALUE;
 		}
 		
-		int val = inorderReverse(root.right, k, arr);
+		int val = inorderReverse(root.right, k);
 		if (val != Integer.MIN_VALUE) {
 			return val;
 		}
 		
-		if (k == arr[0]) {
+		if (k == count) {
 			return root.val;
 		}
-		arr[0] = arr[0] + 1;
+		count++;
 		
-		val = inorderReverse(root.left, k, arr);
+		val = inorderReverse(root.left, k);
 		if (val != Integer.MIN_VALUE) {
 			return val;
 		}
@@ -129,7 +136,8 @@ public class Kth_Smallest_Element_In_BST_230 {
         m.right = new TreeNode(4);
         m.left.right=new TreeNode(2);
 		
-        int val = kthSmallest(m, 1);
+        int val;
+        val = kthSmallest(m, 1);
         System.out.println("1st smallest: (expected 1)" + val);        
         
         val = kthLargest(m, 1);
