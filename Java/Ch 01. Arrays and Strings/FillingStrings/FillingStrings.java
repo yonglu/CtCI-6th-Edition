@@ -15,6 +15,11 @@ import java.util.*;
 
 public class FillingStrings {
 
+	// For counting in backtracking or DFS, it is easier to use global count instead of passing the count in parameter.
+	// If need to pass the count parameter, remember, count++ will update the count in the current recursive level while
+	// count+1 will not update the count in the current recursive level.
+	static int loopCountGlobal;
+	
 	public static List<String> fillingStrings(int k)  {
 		List<String> result = new ArrayList<String>();
 		
@@ -27,34 +32,44 @@ public class FillingStrings {
 		
 		char[] charArray = new char[k];
 		
+		Set<Integer> visited = new HashSet<Integer>(); 
+		
 		// Setup the charArray with the 2 'a' characters filled in
 		for (int i = 0; i < k-1; i++) {
 			for (int j = i+1; j < k; j++) {
 				charArray[i] = 'a';
 				charArray[j] = 'a';
+				loopCountGlobal = 0;
+				visited.clear();
+				visited.add(i);
+				visited.add(j);
 				// Call helper method to fill in the rest of characters.
-				helper(result, charArray, i, j, 0, k, 0);				
+				helper(result, charArray, visited, k, 0);				
 			}
 		}
 		
 		return result;
 	}
 	
-	private static void helper(List<String> result, char[] charArray, int firstIndex, int secondIndex, int loopCount, int k, int start) {
-		if (loopCount == k - 2) {
+	private static void helper(List<String> result, char[] charArray, Set<Integer> visited, int k, int start) {
+		if (loopCountGlobal == k - 2) {
 			result.add(new String(charArray));
 			return;
 		}
 		
 		// Use backtracking to fill the rest of characters
 		for (int i = start; i < k; i++) {
-			if (i != firstIndex && i != secondIndex) {
+			if (!visited.contains(i)) {
 				// Loop through characters 'b' to 'z'
+				// no need to update the visited set as we can only go forward in position.
+//				visited.add(i);
 				for (int j = 1; j < 26; j++) {
 					charArray[i] = (char)('a' + j);
-					helper(result, charArray, firstIndex, secondIndex, loopCount+1, k, i+1);
+					loopCountGlobal++;
+					helper(result, charArray, visited, k, i+1);
+					loopCountGlobal--;
 				}
-				loopCount++;
+//				visited.remove(i);
 			}
 		}
 		
