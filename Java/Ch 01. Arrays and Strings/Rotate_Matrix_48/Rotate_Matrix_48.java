@@ -111,7 +111,7 @@ public class Rotate_Matrix_48 {
 				}
 			}
 			
-			for (int i = 0; i < matrix.length; i++) {
+			for (int i = 0; i < matrix[0].length; i++) {
 				reverse(matrix, false, i);
 			}
 			return;
