@@ -51,7 +51,7 @@ public class Spiral_Matrix_54 {
 			for (int i = c1; i <= c2; i++) 	ans.add(matrix[r1][i]);  // top side
 			for (int i = r1+1; i <= r2; i++) ans.add(matrix[i][c2]); // right side
 			
-			//if r1 == r2 and c1 == c2, then no need to output the bottom and left side.
+			//if r1 == r2 or c1 == c2, then no need to output the bottom and left side.
 			if (r1 < r2 && c1 < c2) {
 				for (int i = c2 - 1; i > c1; i--) ans.add(matrix[r2][i]);  // bottom side
 				for (int i = r2; i > r1; i--) ans.add(matrix[i][c1]);  // left side
